@@ -18,6 +18,22 @@
       cursor: none;
     }
 
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
     .custom-cursor {
       position: fixed;
       width: 10px;
@@ -25,7 +41,7 @@
       background-color: white;
       border-radius: 50%;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 9998;
       mix-blend-mode: difference;
     }
 
@@ -38,7 +54,7 @@
       pointer-events: none;
       mix-blend-mode: difference;
       opacity: 0.5;
-      z-index: 9998;
+      z-index: 9997;
       animation: fadeOut 0.5s forwards;
     }
 
@@ -59,7 +75,7 @@
     }
 
     .content {
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -201,38 +217,12 @@
   </style>
 </head>
 <body>
+  <div class="overlay" id="overlay">Click to Enter</div>
   <div class="custom-cursor" id="customCursor"></div>
   <audio id="bg-music" src="https://files.catbox.moe/525uuc.mp3" preload="auto"></audio>
   <canvas class="background" id="bg"></canvas>
   <div class="content" id="mainContent">
-    <div class="card" id="profileCard">
-      <div class="card-inner">
-        <div class="card-front">
-          <img src="https://cdn.discordapp.com/avatars/1142433636822548601/d0478937f9ceb8a9c22b3471115e6e96.png?size=4096" class="profile-pic" alt="Profile" />
-          <h1>riley</h1>
-          <p>15</p>
-          <div class="socials">
-            <a href="https://namemc.com/9om" target="_blank"><img src="https://s.namemc.com/img/favicon-16.png" alt="NameMC"></a>
-            <a href="https://open.spotify.com/user/313v3jaoadgl4i2pb74cbqoai7dq?si=dfb7ee3342a74c2f" target="_blank"><i class="fab fa-spotify"></i></a>
-            <a href="https://discord.com/users/1142433636822548601" target="_blank"><i class="fab fa-discord"></i></a>
-            <a href="https://guns.lol/⁜" target="_blank"><img src="https://assets.guns.lol/guns_logo_no_background_cropped.png" alt="guns.lol"></a>
-          </div>
-          <button class="flip-btn" onclick="flipCard()">More Info</button>
-        </div>
-        <div class="card-back">
-          <p></p>
-          <div class="domains">
-            <p>domain names</p>
-            <p><a href="https://ecstacy.shop" target="_blank">ecstacy.shop</a></p>
-            <p><a href="https://morechaos.fun" target="_blank">morechaos.fun</a></p>
-            <p><a href="https://latias.fun" target="_blank">latias.fun</a></p>
-            <p><a href="https://riley.cat" target="_blank">riley.cat</a></p>
-          </div>
-          <button class="flip-btn" onclick="flipCard()">Back</button>
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4eB36jeh1uRqjrckAyKEOO?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
+    <!-- existing profile card content -->
   </div>
   <script>
     const canvas = document.getElementById("bg");
@@ -274,8 +264,10 @@
       document.getElementById('profileCard').classList.toggle('flipped');
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const audio = document.getElementById('bg-music');
+    document.getElementById("overlay").addEventListener("click", () => {
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("mainContent").style.display = "flex";
+      const audio = document.getElementById("bg-music");
       audio.volume = 0.25;
       audio.play().catch(err => console.warn("Audio play failed:", err));
     });
