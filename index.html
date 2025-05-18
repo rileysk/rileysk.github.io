@@ -244,9 +244,11 @@
             <p>she • her</p>
             <p>skript development & server managment</p>
           </div>
-
-          <div id="spotify-status" style="margin-top: 20px; font-size: 1rem;"></div>
-
+          <img 
+            src="https://lanyard-profile-readme.vercel.app/api/1142433636822548601?theme=dark&bg=000000&animated=true&hideDiscrim=false&borderRadius=15px&idleMessage=Not%20online" 
+            alt="Discord Presence"
+            style="margin-top: 20px; width: 100%; max-width: 300px; border-radius: 15px; border: 2px solid white;"
+          />
           <button class="flip-btn" onclick="flipCard()">return</button>
         </div>
       </div>
@@ -314,39 +316,6 @@
         trail.remove();
       }, 500);
     });
-
-    // Lanyard WebSocket for Spotify presence
-    const userId = "1142433636822548601";
-    const ws = new WebSocket("wss://api.lanyard.rest/socket");
-
-    ws.onopen = () => {
-      ws.send(JSON.stringify({
-        op: 2,
-        d: {
-          subscribe_to_id: userId
-        }
-      }));
-    };
-
-    ws.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      if (data.t === "INIT_STATE" || data.t === "PRESENCE_UPDATE") {
-        const presence = data.d;
-        const spotify = presence.spotify;
-        const container = document.getElementById("spotify-status");
-        if (spotify) {
-          container.innerHTML = `
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <img src="${spotify.album_art_url}" style="width: 100px; border-radius: 8px; margin-bottom: 10px;" />
-              <p>🎵 <strong>${spotify.song}</strong></p>
-              <p style="opacity: 0.8;">by ${spotify.artist}</p>
-            </div>
-          `;
-        } else {
-          container.innerHTML = "<p style='opacity: 0.5;'>Not listening to Spotify</p>";
-        }
-      }
-    };
   </script>
 </body>
 </html>
