@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>riley.cat</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'VT323', monospace;
+      color: white;
+      background: black;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+    }
+
+    .trail {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border-radius: 50%;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      opacity: 0.5;
+      z-index: 9998;
+      animation: fadeOut 0.5s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .card {
+      perspective: 1000px;
+      width: 300px;
+      height: 500px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      border: 2px solid white;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    .profile-pic {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border: 3px solid white;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 10px 0;
+      position: relative;
+    }
+
+    h1:hover::after {
+      content: "she/her";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 1rem;
+      opacity: 0;
+      animation: fadeInOut 1s forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .socials a {
+      color: white;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .socials a:hover {
+      color: black;
+    }
+
+    .socials img {
+      width: 24px;
+      height: 24px;
+      transition: filter 0.3s;
+    }
+
+    .socials img:hover {
+      filter: brightness(0);
+    }
+
+    .flip-btn {
+      margin-top: 15px;
+      background: none;
+      color: white;
+      border: 2px solid white;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+    }
+
+    .domains {
+      margin-top: 20px;
+      line-height: 1.2;
+    }
+
+    .domains p {
+      margin: 1px 0;
+    }
+
+    .domains a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .domains a:hover {
+      text-decoration: underline;
+    }
+
+    iframe {
+      margin-top: 20px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="custom-cursor" id="customCursor"></div>
+  <audio id="bg-music" src="https://files.catbox.moe/525uuc.mp3" preload="auto"></audio>
+  <canvas class="background" id="bg"></canvas>
+  <div class="content" id="mainContent">
+    <div class="card" id="profileCard">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://cdn.discordapp.com/avatars/1142433636822548601/d0478937f9ceb8a9c22b3471115e6e96.png?size=4096" class="profile-pic" alt="Profile" />
+          <h1>riley</h1>
+          <p>15</p>
+          <div class="socials">
+            <a href="https://namemc.com/9om" target="_blank"><img src="https://s.namemc.com/img/favicon-16.png" alt="NameMC"></a>
+            <a href="https://open.spotify.com/user/313v3jaoadgl4i2pb74cbqoai7dq?si=dfb7ee3342a74c2f" target="_blank"><i class="fab fa-spotify"></i></a>
+            <a href="https://discord.com/users/1142433636822548601" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://guns.lol/⁜" target="_blank"><img src="https://assets.guns.lol/guns_logo_no_background_cropped.png" alt="guns.lol"></a>
+          </div>
+          <button class="flip-btn" onclick="flipCard()">More Info</button>
+        </div>
+        <div class="card-back">
+          <p></p>
+          <div class="domains">
+            <p>domain names</p>
+            <p><a href="https://ecstacy.shop" target="_blank">ecstacy.shop</a></p>
+            <p><a href="https://morechaos.fun" target="_blank">morechaos.fun</a></p>
+            <p><a href="https://latias.fun" target="_blank">latias.fun</a></p>
+            <p><a href="https://riley.cat" target="_blank">riley.cat</a></p>
+          </div>
+          <button class="flip-btn" onclick="flipCard()">Back</button>
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4eB36jeh1uRqjrckAyKEOO?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const stars = Array(100).fill().map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5,
+      velocity: Math.random() * 0.3 + 0.1,
+    }));
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        star.y += star.velocity;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+      requestAnimationFrame(animateStars);
+    }
+
+    animateStars();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    function flipCard() {
+      document.getElementById('profileCard').classList.toggle('flipped');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const audio = document.getElementById('bg-music');
+      audio.volume = 0.25;
+      audio.play().catch(err => console.warn("Audio play failed:", err));
+    });
+
+    const cursor = document.getElementById("customCursor");
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.pageX + "px";
+      cursor.style.top = e.pageY + "px";
+
+      const trail = document.createElement("div");
+      trail.className = "trail";
+      trail.style.left = e.pageX + "px";
+      trail.style.top = e.pageY + "px";
+      document.body.appendChild(trail);
+      setTimeout(() => {
+        trail.remove();
+      }, 500);
+    });
+  </script>
+</body>
+</html>
