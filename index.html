@@ -222,7 +222,31 @@
   <audio id="bg-music" src="https://files.catbox.moe/525uuc.mp3" preload="auto"></audio>
   <canvas class="background" id="bg"></canvas>
   <div class="content" id="mainContent">
-    <!-- existing profile card content -->
+    <div class="card" id="profileCard">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://cdn.discordapp.com/avatars/1142433636822548601/b186856dfeb9ceba2aa6f383d2a3e6f2.png?size=1024" class="profile-pic" />
+          <h1>riley</h1>
+          <p>Admin @ riley.cat</p>
+          <div class="socials">
+            <a href="https://namemc.com/@9om" target="_blank"><img src="https://s.namemc.com/img/favicon-16.png" alt="NameMC" /></a>
+            <a href="https://open.spotify.com/user/313v3jaoadgl4i2pb74cbqoai7dq?si=dfb7ee3342a74c2f" target="_blank"><i class="fab fa-spotify"></i></a>
+            <a href="https://discord.com/users/1142433636822548601" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://guns.lol/⁜" target="_blank"><img src="https://assets.guns.lol/guns_logo_no_background_cropped.png" alt="guns.lol" /></a>
+          </div>
+          <button class="flip-btn" onclick="flipCard()">More Info</button>
+        </div>
+        <div class="card-back">
+          <p>More details go here!</p>
+          <div class="domains">
+            <p>doxbin.com</p>
+            <p>doxbin.org</p>
+            <p>doxbin.net</p>
+          </div>
+          <button class="flip-btn" onclick="flipCard()">Back</button>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     const canvas = document.getElementById("bg");
