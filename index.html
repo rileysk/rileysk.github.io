@@ -3,318 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>riley.cat</title>
+  <title>Riley's Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://en.pronouns.page/favicon.ico">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'VT323', monospace;
-      color: white;
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    body {
       background: black;
+      color: white;
+      min-height: 100vh;
       overflow: hidden;
-      cursor: none;
+      position: relative;
     }
 
-    .overlay {
+    canvas#stars {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      z-index: 9999;
-      cursor: pointer;
-    }
-
-    .custom-cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      mix-blend-mode: difference;
-    }
-
-    .trail {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      border-radius: 50%;
-      pointer-events: none;
-      mix-blend-mode: difference;
-      opacity: 0.5;
-      z-index: 9997;
-      animation: fadeOut 0.5s forwards;
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: scale(0.5);
-      }
-    }
-
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       z-index: -1;
     }
 
-    .content {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
     }
 
-    .card {
-      perspective: 1000px;
-      width: 300px;
-      height: 500px;
-    }
-
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
-    .card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
+    .header {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background: #111;
-      border: 2px solid white;
-      border-radius: 15px;
-      padding: 20px;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .card-back {
-      transform: rotateY(180deg);
-    }
-
-    .profile-pic {
+    .header img {
       border-radius: 50%;
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border: 3px solid white;
-      margin-bottom: 20px;
+      width: 100px;
+      height: 100px;
     }
 
-    h1 {
-      font-size: 2rem;
-      margin: 10px 0;
-      position: relative;
+    .header h1 {
+      font-size: 2.5rem;
     }
 
-    h1:hover::after {
-      content: "she/her";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 1rem;
-      opacity: 0;
-      animation: fadeInOut 1s forwards;
-    }
-
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-      50% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-    }
-
-    .socials {
+    .header a.pronouns-link {
+      margin-left: auto;
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-
-    .socials a {
-      color: white;
-      font-size: 1.5rem;
+      align-items: center;
+      gap: 0.5rem;
+      color: #9D5CFF;
       text-decoration: none;
-      transition: color 0.3s;
+      font-size: 1rem;
     }
 
-    .socials a:hover {
-      color: black;
+    .header a.pronouns-link img {
+      width: 20px;
+      height: 20px;
     }
 
-    .socials img {
-      width: 24px;
-      height: 24px;
-      transition: filter 0.3s;
+    .section {
+      margin-bottom: 2rem;
     }
 
-    .socials img:hover {
-      filter: brightness(0);
+    h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #9D5CFF;
+      display: inline-block;
+      padding-bottom: 0.25rem;
     }
 
-    .flip-btn {
-      margin-top: 15px;
-      background: none;
-      color: white;
-      border: 2px solid white;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-family: 'VT323', monospace;
+    ul {
+      list-style: none;
+      padding-left: 1rem;
     }
 
-    .domains {
-      margin-top: 20px;
-      line-height: 1.2;
-    }
-
-    .domains p {
-      margin: 1px 0;
-    }
-
-    .domains a {
-      color: white;
-      text-decoration: none;
-    }
-
-    .domains a:hover {
-      text-decoration: underline;
-    }
-
-    iframe {
-      margin-top: 20px;
-      border-radius: 12px;
+    li::before {
+      content: "\2726";
+      color: #9D5CFF;
+      margin-right: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <div class="overlay" id="overlay">Click to Enter</div>
-  <div class="custom-cursor" id="customCursor"></div>
-  <audio id="bg-music" src="https://files.catbox.moe/414wrb.mp3" preload="auto"></audio>
-  <canvas class="background" id="bg"></canvas>
-  <div class="content" id="mainContent">
-    <div class="card" id="profileCard">
-      <div class="card-inner">
-        <div class="card-front">
-          <img src="https://cdn.discordapp.com/avatars/1142433636822548601/d0478937f9ceb8a9c22b3471115e6e96.png?size=4096" class="profile-pic" />
-          <h1>riley</h1>
-          <p>Admin @ riley.cat</p>
-          <p>Helper @ Valoria</p>
-          <div class="socials">
-            <a href="https://namemc.com/@9om" target="_blank"><img src="https://s.namemc.com/img/favicon-16.png" alt="NameMC" /></a>
-            <a href="https://open.spotify.com/user/313v3jaoadgl4i2pb74cbqoai7dq?si=dfb7ee3342a74c2f" target="_blank"><i class="fab fa-spotify"></i></a>
-            <a href="https://discord.com/users/1142433636822548601" target="_blank"><i class="fab fa-discord"></i></a>
-            <a href="https://guns.lol/⁜" target="_blank"><img src="https://assets.guns.lol/guns_logo_no_background_cropped.png" alt="guns.lol" /></a>
-          </div>
-          <button class="flip-btn" onclick="flipCard()">more</button>
-        </div>
-        <div class="card-back">
-          <p>about me</p>
-          <div class="domains">
-            <p>riley</p>
-            <p>she • her</p>
-            <p>skript development & management</p>
-          </div>
-          <img 
-            src="https://lanyard-profile-readme.vercel.app/api/1142433636822548601?theme=dark&bg=000000&animated=true&hideDiscrim=false&borderRadius=15px&idleMessage=Not%20online" 
-            alt="Discord Presence"
-            style="margin-top: 20px; width: 100%; max-width: 300px; border-radius: 15px; border: 2px solid white;"
-          />
-          <button class="flip-btn" onclick="flipCard()">return</button>
-        </div>
-      </div>
+  <canvas id="stars"></canvas>
+  <div class="container">
+    <div class="header">
+      <img src="https://cdn.discordapp.com/avatars/1142433636822548601/c7a3ed6ea18fd2901980193784733f82.png?size=1024" alt="Riley's Avatar">
+      <h1>Riley</h1>
+      <a class="pronouns-link" href="https://en.pronouns.page/@ry.ly" target="_blank">
+        <img src="https://en.pronouns.page/favicon.ico" alt="Pronouns Icon">Pronouns
+      </a>
+    </div>
+
+    <div class="section">
+      <h2>About Me</h2>
+      <p>I specialize in Minecraft server staffing, management, and development. I'm passionate about creating strong communities and high-quality experiences through expert moderation and custom development using Skript. I use she/her pronouns and I am 15 years old!</p>
+    </div>
+
+    <div class="section">
+      <h2>Experience</h2>
+      <ul>
+        <li>Owner @ Yuzai/CaveKitz (200+ members)</li>
+        <li>Developer @ Kitted (100+ members)</li>
+        <li>Developer @ GrandKits (200+ members)</li>
+        <li>Developer @ GoKits (150+ members)</li>
+        <li>Moderator @ MCEvents (200+ members)</li>
+        <li>Moderator @ SqizleSMP (100+ members)</li>
+        <li>Helper @ ZanaMC (1000+ members)</li>
+        <li>Helper @ ValoriaSurvival (800+ members)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Skills</h2>
+      <p>Experienced in ticket management, staff management, and mentoring. Skilled in Skript scripting language for Minecraft development.</p>
+    </div>
+
+    <div class="section">
+      <h2>Personal Projects</h2>
+      <ul>
+        <li>Kittable - A feature rich randomkits server</li>
+        <li>riley.cat - A crystal PvP practice server</li>
+        <li>AmethystPrac - A PvP practice server</li>
+        <li>Ticketly - A Discord ticket bot</li>
+      </ul>
     </div>
   </div>
+
   <script>
-    const canvas = document.getElementById("bg");
+    const canvas = document.getElementById("stars");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const stars = Array(100).fill().map(() => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.5,
-      velocity: Math.random() * 0.3 + 0.1,
-    }));
+    let stars = [];
+    for (let i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+      });
+    }
 
-    function animateStars() {
+    function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'white';
-      stars.forEach(star => {
+      ctx.fillStyle = "white";
+      stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();
+        star.x += star.dx;
+        star.y += star.dy;
 
-        star.y += star.velocity;
-        if (star.y > canvas.height) {
-          star.y = 0;
-          star.x = Math.random() * canvas.width;
-        }
+        if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
       });
-      requestAnimationFrame(animateStars);
+      requestAnimationFrame(animate);
     }
 
-    animateStars();
+    animate();
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-    });
-
-    function flipCard() {
-      document.getElementById('profileCard').classList.toggle('flipped');
-    }
-
-    document.getElementById("overlay").addEventListener("click", () => {
-      document.getElementById("overlay").style.display = "none";
-      document.getElementById("mainContent").style.display = "flex";
-      const audio = document.getElementById("bg-music");
-      audio.volume = 0.10;
-      audio.play().catch(err => console.warn("Audio play failed:", err));
-    });
-
-    const cursor = document.getElementById("customCursor");
-    document.addEventListener("mousemove", (e) => {
-      cursor.style.left = e.pageX + "px";
-      cursor.style.top = e.pageY + "px";
-
-      const trail = document.createElement("div");
-      trail.className = "trail";
-      trail.style.left = e.pageX + "px";
-      trail.style.top = e.pageY + "px";
-      document.body.appendChild(trail);
-      setTimeout(() => {
-        trail.remove();
-      }, 500);
     });
   </script>
 </body>
