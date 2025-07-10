@@ -2,255 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Riley's Portfolio</title>
-  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1142433636822548601/cab34f4970ec97fa7aa8d8394920f6ce.png?size=1024">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riley</title>
   <style>
-    :root {
-      --primary: #FF4E87;
-      --background: #0e0e1a;
-      --accent: #B27EFF;
-      --text: #eee;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
 
     body {
-      background: var(--background);
-      color: var(--text);
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(-45deg, #2b2b63, #1c1c3c, #302a68, #1a1a2f);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 1rem;
-      position: relative;
-      overflow: hidden;
+      height: 100vh;
     }
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
+      background-color: #2d2d4d;
+      border-radius: 20px;
       padding: 2rem;
-      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      text-align: center;
+      color: #fff;
+      width: 300px;
+      animation: float 6s ease-in-out infinite;
     }
 
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--accent);
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #5ab1f2;
+      margin: 1rem 0 0.2rem;
+    }
+
+    .pronouns {
+      font-size: 1rem;
+      color: #c0c0ff;
       margin-bottom: 1rem;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 0.3rem;
-      animation: colorChange 3s infinite;
-    }
-
-    @keyframes colorChange {
-      0% { color: var(--primary); }
-      25% { color: var(--accent); }
-      50% { color: #fff; }
-      75% { color: var(--accent); }
-      100% { color: var(--primary); }
-    }
-
-    .subtext {
-      margin-bottom: 1rem;
-    }
-
-    .icons a {
-      display: inline-block;
-      margin: 0 8px;
-    }
-
-    .icons img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .nav {
-      margin: 1.5rem 0;
+    .icon-bar {
+      margin-top: 1.5rem;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
 
-    .nav button {
-      background-color: var(--accent);
+    .icon-bar a {
+      text-decoration: none; /* ✅ Removes underline */
       color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.2s;
+      font-size: 1.6rem;
+      transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #3c3c66;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .nav button:hover,
-    .nav button.active {
-      background-color: var(--primary);
+    .icon-bar a:hover {
+      transform: scale(1.2);
+      color: #5ab1f2;
+      box-shadow: 0 0 10px #5ab1f2;
+      background-color: rgba(255,255,255,0.08);
     }
 
-    .content {
-      text-align: left;
-      margin-top: 1rem;
-    }
-
-    .content p, .content ul li {
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .content ul {
-      margin-left: 1.2rem;
-    }
-
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #888;
+    .pfp {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-top: -1rem;
+      object-fit: cover;
+      border: 2px solid #5ab1f2;
     }
   </style>
+
+  <!-- Font Awesome CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
 </head>
 <body>
-  <audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_cddf7e4fb6.mp3"></audio>
-
-  <canvas id="stars"></canvas>
-
   <div class="card">
-    <img src="https://cdn.discordapp.com/avatars/1142433636822548601/cab34f4970ec97fa7aa8d8394920f6ce.png?size=1024" alt="Profile" class="profile-img" />
-    <h1>riley</h1>
-    <div class="subtext">15 • she/her</div>
-    <div class="icons">
-      <a href="https://en.pronouns.page/@ry.ly" target="_blank"><img src="https://en.pronouns.page/favicon.ico" alt="Pronouns"></a>
-      <a href="https://github.com/rileysk" target="_blank"><img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub"></a>
-      <a href="https://laby.net/@9om" target="_blank"><img src="https://laby.net/favicon.ico" alt="Laby.net"></a>
-      <a href="https://open.spotify.com/user/313v3jaoadgl4i2pb74cbqoai7dq" target="_blank"><img src="https://www.scdn.co/i/_global/favicon.png" alt="Spotify"></a>
+    <img src="https://cdn.discordapp.com/avatars/1142433636822548601/9e2f87d1bd602f56fa74e2540f2b7f4e.png?size=1024" alt="Profile Picture" class="pfp" />
+    <div class="name">riley</div>
+    <div class="pronouns">she/her</div>
+    <div class="icon-bar">
+      <a href="https://laby.net/@9om" target="_blank" title="Laby"><i class="fa-solid fa-globe"></i></a>
+      <a href="https://on.soundcloud.com/vvhSE7Sf0ReGXZKa1I" target="_blank" title="SoundCloud"><i class="fa-brands fa-soundcloud"></i></a>
+      <a href="https://discord.com/users/1142433636822548601" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+      <a href="https://github.com/rileysk" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
     </div>
-
-    <div class="nav">
-      <button class="active" onclick="playClick(); showTab('home', this)">Home</button>
-      <button onclick="playClick(); showTab('experience', this)">Experience</button>
-      <button onclick="playClick(); showTab('contact', this)">Contact</button>
-    </div>
-
-    <div class="content" id="home">
-      <p>I specialize in Minecraft server staffing, management, and development. I'm passionate about creating strong communities and high-quality experiences through expert moderation and custom development using Skript.</p>
-    </div>
-
-    <div class="content" id="experience" style="display: none;">
-      <ul>
-        <li><strong>Owner</strong> @ RandomKits Practice</li>
-        <li><strong>Owner</strong> @ Yuzai/CaveKitz (200+ members)</li>
-        <li><strong>Developer</strong> @ Kitted (100+ members)</li>
-        <li><strong>Developer</strong> @ GrandKits (200+ members)</li>
-        <li><strong>Developer</strong> @ GoKits (150+ members)</li>
-        <li><strong>Sr. Moderator</strong> @ SqizleSMP (100+ members)</li>
-        <li><strong>Moderator</strong> @ MCEvents (200+ members)</li>
-        <li><strong>Helper</strong> @ ZanaMC (1000+ members)</li>
-        <li><strong>Helper</strong> @ ValoriaSurvival (800+ members)</li>
-      </ul>
-    </div>
-
-    <div class="content" id="contact" style="display: none;">
-      <p>Email: <a href="mailto:riley@vzy.my">riley@vzy.my</a></p>
-      <p>Discord: <a href="https://discord.com/users/1142433636822548601">ry.ly</a></p>
-    </div>
-
-    <footer>&copy; 2025 riley.cat</footer>
   </div>
-
-  <script>
-    function showTab(tabId, btn) {
-      document.querySelectorAll('.content').forEach(div => div.style.display = 'none');
-      document.getElementById(tabId).style.display = 'block';
-      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    function playClick() {
-      const clickSound = document.getElementById("clickSound");
-      clickSound.currentTime = 0;
-      clickSound.play();
-    }
-
-    const canvas = document.getElementById('stars');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    function createStars() {
-      stars = [];
-      for (let i = 0; i < 200; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5,
-          velocity: Math.random() * 0.5 + 0.2
-        });
-      }
-    }
-
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#fff';
-      stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    function updateStars() {
-      stars.forEach(star => {
-        star.y += star.velocity;
-        if (star.y > canvas.height) {
-          star.y = 0;
-          star.x = Math.random() * canvas.width;
-        }
-      });
-    }
-
-    function animate() {
-      drawStars();
-      updateStars();
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      createStars();
-    });
-
-    resizeCanvas();
-    createStars();
-    animate();
-  </script>
 </body>
 </html>
