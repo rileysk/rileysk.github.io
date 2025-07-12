@@ -2,113 +2,208 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Riley</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yuri & Riley</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
-
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Outfit', sans-serif;
-      background: linear-gradient(-45deg, #2b2b63, #1c1c3c, #302a68, #1a1a2f);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
+      box-sizing: border-box;
+      font-family: 'Chewy', cursive;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    video.bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .container {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      gap: 40px;
     }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .card {
-      background-color: #2d2d4d;
+    .box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
       border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       text-align: center;
-      color: #fff;
-      width: 300px;
-      animation: float 6s ease-in-out infinite;
+      color: white;
+      width: 250px;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+    .box img.profile {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
     }
 
-    .name {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #5ab1f2;
-      margin: 1rem 0 0.2rem;
+    .box h2 {
+      position: relative;
+      display: block;
+      text-align: center;
     }
 
-    .pronouns {
-      font-size: 1rem;
-      color: #c0c0ff;
-      margin-bottom: 1rem;
+    .box h2 .hover-text {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      white-space: nowrap;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: opacity 0.3s ease;
     }
 
-    .icon-bar {
-      margin-top: 1.5rem;
+    .box h2:hover .hover-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .hover-text.red {
+      color: red;
+      text-shadow: 0 0 8px red;
+    }
+
+    .hover-text.purple {
+      color: #c084fc;
+      text-shadow: 0 0 8px #c084fc;
+    }
+
+    .buttons {
+      margin-top: 15px;
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .icon-bar a {
-      text-decoration: none; /* ✅ Removes underline */
-      color: white;
-      font-size: 1.6rem;
-      transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-      width: 50px;
-      height: 50px;
+    .buttons a {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background-color: #3c3c66;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .buttons a:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .buttons img {
+      width: 20px;
+      height: 20px;
+      background: none;
+      filter: brightness(0) saturate(100%) invert(87%) sepia(1%) saturate(0%) hue-rotate(180deg) brightness(92%) contrast(86%);
+    }
+
+    .middle-icon {
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .icon-bar a:hover {
-      transform: scale(1.2);
-      color: #5ab1f2;
-      box-shadow: 0 0 10px #5ab1f2;
-      background-color: rgba(255,255,255,0.08);
+    .middle-icon a {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .pfp {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-top: -1rem;
-      object-fit: cover;
-      border: 2px solid #5ab1f2;
+    .middle-icon a:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+    }
+
+    .middle-icon img {
+      width: 30px;
+      height: 30px;
+      background: none;
+      filter: brightness(0) saturate(100%) invert(87%) sepia(1%) saturate(0%) hue-rotate(180deg) brightness(92%) contrast(86%);
     }
   </style>
-
-  <!-- Font Awesome CDN -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <script>
+    window.onload = function () {
+      const audio = new Audio('https://files.catbox.moe/uqo3n8.mp3');
+      audio.volume = 0.5;
+      audio.play();
+    }
+  </script>
 </head>
 <body>
-  <div class="card">
-    <img src="https://cdn.discordapp.com/avatars/1142433636822548601/9e2f87d1bd602f56fa74e2540f2b7f4e.png?size=1024" alt="Profile Picture" class="pfp" />
-    <div class="name">riley</div>
-    <div class="pronouns">she/her</div>
-    <div class="icon-bar">
-      <a href="https://laby.net/@9om" target="_blank" title="Laby"><i class="fa-solid fa-globe"></i></a>
-      <a href="https://on.soundcloud.com/vvhSE7Sf0ReGXZKa1I" target="_blank" title="SoundCloud"><i class="fa-brands fa-soundcloud"></i></a>
-      <a href="https://discord.com/users/1142433636822548601" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
-      <a href="https://github.com/rileysk" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+  <video class="bg-video" autoplay muted loop>
+    <source src="https://files.catbox.moe/42bzls.webm" type="video/webm">
+  </video>
+
+  <div class="container">
+    <!-- Left box - Yuri -->
+    <div class="box">
+      <img class="profile" src="https://cdn.discordapp.com/avatars/233302676618608640/188cb4da0ba42498d4865d353a66aea4.png?size=1024" alt="Yuri">
+      <h2>Yuri <span class="hover-text red">Admin</span></h2>
+      <p>they/them</p>
+      <div class="buttons">
+        <a href="https://discord.com/users/233302676618608640" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
+        </a>
+        <a href="https://namemc.com/profile/GirlsLikeYou" target="_blank">
+          <img src="https://crowdin-static.cf-downloads.crowdin.com/images/project-logo/108477/small/abb52e49d07001723e4896140083a0b6191.jpg" alt="NameMC">
+        </a>
+      </div>
+    </div>
+
+    <!-- Middle Discord Icon -->
+    <div class="middle-icon">
+      <a href="https://discord.gg/zP49RhAQhr" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Join Discord">
+      </a>
+    </div>
+
+    <!-- Right box - Riley -->
+    <div class="box">
+      <img class="profile" src="https://cdn.discordapp.com/avatars/1142433636822548601/9e2f87d1bd602f56fa74e2540f2b7f4e.png?size=1024" alt="Riley">
+      <h2>Riley <span class="hover-text purple">Owner</span></h2>
+      <p>she/her</p>
+      <div class="buttons">
+        <a href="https://discord.com/users/1142433636822548601" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
+        </a>
+        <a href="https://namemc.com/profile/9om" target="_blank">
+          <img src="https://crowdin-static.cf-downloads.crowdin.com/images/project-logo/108477/small/abb52e49d07001723e4896140083a0b6191.jpg" alt="NameMC">
+        </a>
+        <a href="https://on.soundcloud.com/kJon9798m8wfgGFjAh" target="_blank">
+          <img src="https://getdrawings.com/free-icon/soundcloud-icon-transparent-53.png" alt="SoundCloud">
+        </a>
+        <a href="https://github.com/rileysk" target="_blank">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub">
+        </a>
+      </div>
     </div>
   </div>
 </body>
