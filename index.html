@@ -2,209 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Yuri & Riley</title>
-  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>riley's garden :3</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
   <style>
-    * {
+    body {
+      background-color: #2f2f2f;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Chewy', cursive;
-    }
-
-    body, html {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    video.bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .container {
+      font-family: 'Source Code Pro', monospace;
+      color: #eee;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      gap: 40px;
+      overflow: hidden;
     }
 
-    .box {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      border-radius: 20px;
-      text-align: center;
+    @media (max-width: 768px) {
+      body {
+        height: auto;
+        padding: 20px;
+        align-items: flex-start;
+        overflow: auto;
+      }
+    }
+
+    .main-wrapper {
+      width: 90%;
+      max-width: 640px;
+      border-radius: 8px;
+      background-color: #1e1e1e;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      border-bottom: 1px solid #444;
+      background-color: transparent;
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    .toolbar button {
+      background: none;
+      border: none;
       color: white;
-      width: 250px;
+      font-weight: normal;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: 'Source Code Pro', monospace;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .box img.profile {
-      width: 150px;
-      height: 150px;
+    .toolbar button.active {
+      font-weight: bold;
+      color: pink;
+      cursor: default;
+    }
+
+    .profile-container {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 15px;
     }
 
-    .box h2 {
-      position: relative;
-      display: block;
-      text-align: center;
-    }
-
-    .box h2 .hover-text {
-      visibility: hidden;
-      opacity: 0;
-      position: absolute;
-      top: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 14px;
-      white-space: nowrap;
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: opacity 0.3s ease;
-    }
-
-    .box h2:hover .hover-text {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .hover-text.red {
-      color: red;
-      text-shadow: 0 0 8px red;
-    }
-
-    .hover-text.purple {
-      color: #c084fc;
-      text-shadow: 0 0 8px #c084fc;
-    }
-
-    .buttons {
-      margin-top: 15px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .buttons a {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+    .name-container {
+      margin-top: 0;
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: gray;
+      border: 2px solid #1e1e1e;
+      box-sizing: content-box;
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+      50% { box-shadow: 0 0 6px 3px rgba(255, 255, 255, 0.3); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+    }
+
+    .online { background-color: #43b581; animation: pulse-green 2s infinite; }
+    .idle { background-color: #faa61a; animation: pulse-yellow 2s infinite; }
+    .dnd { background-color: #f04747; animation: pulse-red 2s infinite; }
+    .offline { background-color: gray; animation: pulse-gray 2s infinite; }
+
+    @keyframes pulse-green {
+      0% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
+      50% { box-shadow: 0 0 8px 4px rgba(67, 181, 129, 0.4); }
+      100% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
+    }
+    @keyframes pulse-yellow {
+      0% { box-shadow: 0 0 0 0 rgba(250, 166, 26, 0.7); }
+      50% { box-shadow: 0 0 8px 4px rgba(250, 166, 26, 0.4); }
+      100% { box-shadow: 0 0 0 0 rgba(250, 166, 26, 0.7); }
+    }
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(240, 71, 71, 0.7); }
+      50% { box-shadow: 0 0 8px 4px rgba(240, 71, 71, 0.4); }
+      100% { box-shadow: 0 0 0 0 rgba(240, 71, 71, 0.7); }
+    }
+    @keyframes pulse-gray {
+      0% { box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7); }
+      50% { box-shadow: 0 0 8px 4px rgba(128, 128, 128, 0.4); }
+      100% { box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7); }
+    }
+
+    #page-text {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Green links */
+    a {
+      color: #43b581;
       text-decoration: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .buttons a:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
-
-    .buttons img {
-      width: 20px;
-      height: 20px;
-      background: none;
-      filter: brightness(0) saturate(100%) invert(87%) sepia(1%) saturate(0%) hue-rotate(180deg) brightness(92%) contrast(86%);
-    }
-
-    .middle-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .middle-icon a {
-      width: 60px;
-      height: 60px;
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .middle-icon a:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-    }
-
-    .middle-icon img {
-      width: 30px;
-      height: 30px;
-      background: none;
-      filter: brightness(0) saturate(100%) invert(87%) sepia(1%) saturate(0%) hue-rotate(180deg) brightness(92%) contrast(86%);
+    a:hover {
+      text-decoration: underline;
     }
   </style>
-  <script>
-    window.onload = function () {
-      const audio = new Audio('https://files.catbox.moe/uqo3n8.mp3');
-      audio.volume = 0.5;
-      audio.play();
-    }
-  </script>
 </head>
 <body>
-  <video class="bg-video" autoplay muted loop>
-    <source src="https://files.catbox.moe/42bzls.webm" type="video/webm">
-  </video>
-
-  <div class="container">
-    <!-- Left box - Yuri -->
-    <div class="box">
-      <img class="profile" src="https://cdn.discordapp.com/avatars/233302676618608640/188cb4da0ba42498d4865d353a66aea4.png?size=1024" alt="Yuri">
-      <h2>Yuri <span class="hover-text red">Admin</span></h2>
-      <p>they/them</p>
-      <div class="buttons">
-        <a href="https://discord.com/users/233302676618608640" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
-        </a>
-        <a href="https://namemc.com/profile/GirlsLikeYou" target="_blank">
-          <img src="https://crowdin-static.cf-downloads.crowdin.com/images/project-logo/108477/small/abb52e49d07001723e4896140083a0b6191.jpg" alt="NameMC">
-        </a>
+  <div class="main-wrapper">
+    <div class="toolbar">
+      <button class="active" data-page="home">#home</button>
+      <button data-page="contact">#contact</button>
+      <button data-page="links">#links</button>
+      <button data-page="gallery">#gallery</button>
+    </div>
+    <div id="slide-content" style="padding: 20px; font-family: 'Source Code Pro', monospace;">
+      <div class="profile-container" id="home-content">
+        <img src="profile-picture.png" alt="Profile Picture" class="profile-pic" />
+        <div class="name-container">
+          <div id="status-dot" class="status-dot offline"></div>
+          <div class="profile-name">riley</div>
+        </div>
       </div>
-    </div>
-
-    <!-- Middle Discord Icon -->
-    <div class="middle-icon">
-      <a href="https://discord.gg/zP49RhAQhr" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Join Discord">
-      </a>
-    </div>
-
-    <!-- Right box - Riley -->
-    <div class="box">
-      <img class="profile" src="https://cdn.discordapp.com/avatars/1142433636822548601/9e2f87d1bd602f56fa74e2540f2b7f4e.png?size=1024" alt="Riley">
-      <h2>Riley <span class="hover-text purple">Owner</span></h2>
-      <p>she/her</p>
-      <div class="buttons">
-        <a href="https://discord.com/users/1142433636822548601" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
-        </a>
-        <a href="https://namemc.com/profile/9om" target="_blank">
-          <img src="https://crowdin-static.cf-downloads.crowdin.com/images/project-logo/108477/small/abb52e49d07001723e4896140083a0b6191.jpg" alt="NameMC">
-        </a>
-        <a href="https://on.soundcloud.com/kJon9798m8wfgGFjAh" target="_blank">
-          <img src="https://getdrawings.com/free-icon/soundcloud-icon-transparent-53.png" alt="SoundCloud">
-        </a>
-        <a href="https://github.com/rileysk" target="_blank">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub">
-        </a>
+      <div class="text-content" id="page-text">
+        <p>hi, i'm riley! welcome to my garden :3<br />i use she/her pronouns and i'm 15 years old</p>
       </div>
     </div>
   </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.toolbar button');
+    const pageText = document.getElementById('page-text');
+    const homeContent = document.getElementById('home-content');
+    const statusDot = document.getElementById('status-dot');
+
+    function setActiveButton(page) {
+      buttons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === page);
+      });
+    }
+
+    function fadeOutIn(callback) {
+      pageText.style.opacity = 0;
+      setTimeout(() => {
+        callback();
+        pageText.style.opacity = 1;
+      }, 300);
+    }
+
+    function showPage(page) {
+      setActiveButton(page);
+      fadeOutIn(() => {
+        if (page === 'home') {
+          homeContent.style.display = 'flex';
+          pageText.innerHTML = `<p>hi, i'm riley! welcome to my garden :3<br />i use she/her pronouns and i'm 15 years old</p>`;
+        } else if (page === 'contact') {
+          homeContent.style.display = 'none';
+          pageText.innerHTML = `
+            <p>email: <a href="mailto:hai@riley.cat">hai@riley.cat</a></p>
+            <p>discord: <a href="https://discord.com/users/1142433636822548601">ry.ly</a></p>
+          `;
+        } else if (page === 'links') {
+          homeContent.style.display = 'none';
+          pageText.innerHTML = `
+            <p><a href="https://github.com/rileysk" target="_blank" rel="noopener noreferrer">github</a></p>
+            <p><a href="https://namemc.com/profile/9om" target="_blank" rel="noopener noreferrer">minecraft account</a></p>
+            <p><a href="https://discord.gg/zP49RhAQhr" target="_blank" rel="noopener noreferrer">twin discord server</a></p>
+          `;
+        } else if (page === 'gallery') {
+          homeContent.style.display = 'none';
+          pageText.innerHTML = `
+            <p>gallery coming soon! stay tuned 🖼️</p>
+          `;
+        }
+      });
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        showPage(button.dataset.page);
+      });
+    });
+
+    function updateStatus() {
+      fetch("https://api.lanyard.rest/v1/users/1142433636822548601")
+        .then(res => res.json())
+        .then(data => {
+          if (!data.success) return;
+          const status = data.data.discord_status;
+          statusDot.classList.remove("online", "idle", "dnd", "offline");
+          if (["online", "idle", "dnd", "offline"].includes(status)) {
+            statusDot.classList.add(status);
+          } else {
+            statusDot.classList.add("offline");
+          }
+        })
+        .catch(err => console.error("Error fetching Lanyard status:", err));
+    }
+
+    updateStatus();
+    setInterval(updateStatus, 30000);
+  </script>
 </body>
 </html>
