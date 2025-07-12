@@ -52,14 +52,11 @@
     .toolbar button {
       background: none;
       border: none;
-      color: white;
+      color: #fff;
       font-weight: normal;
       font-size: 1rem;
       cursor: pointer;
       font-family: 'Source Code Pro', monospace;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .toolbar button.active {
@@ -73,8 +70,8 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 15px;
       margin-bottom: 10px;
+      gap: 12px;
     }
 
     .profile-pic {
@@ -85,7 +82,6 @@
     }
 
     .name-container {
-      margin-top: 0;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -141,14 +137,38 @@
       transition: opacity 0.3s ease-in-out;
     }
 
-    /* Green links */
     a {
-      color: #43b581;
+      color: #7fff90;
       text-decoration: none;
     }
 
     a:hover {
       text-decoration: underline;
+    }
+
+    .friends-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .friend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .friend {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 48%;
+    }
+
+    .friend img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
     }
   </style>
 </head>
@@ -158,18 +178,18 @@
       <button class="active" data-page="home">#home</button>
       <button data-page="contact">#contact</button>
       <button data-page="links">#links</button>
-      <button data-page="gallery">#gallery</button>
+      <button data-page="friends">#friends</button>
     </div>
     <div id="slide-content" style="padding: 20px; font-family: 'Source Code Pro', monospace;">
       <div class="profile-container" id="home-content">
         <img src="profile-picture.png" alt="Profile Picture" class="profile-pic" />
         <div class="name-container">
           <div id="status-dot" class="status-dot offline"></div>
-          <div class="profile-name">riley</div>
+          <div class="profile-name">riley <span style="color: gray; font-style: italic; font-weight: normal; font-size: 0.95rem;">(she/her)</span></div>
         </div>
       </div>
       <div class="text-content" id="page-text">
-        <p>hi, i'm riley! welcome to my garden :3<br />i use she/her pronouns and i'm 15 years old</p>
+        <p>haii! my name's Riley and i'm 15 years old from England! i'm interested in (but not really good at :c) computers and coding. i do minecraft development in skript, and i like pokémon (my favourite being Latias :3)!</p>
       </div>
     </div>
   </div>
@@ -199,7 +219,7 @@
       fadeOutIn(() => {
         if (page === 'home') {
           homeContent.style.display = 'flex';
-          pageText.innerHTML = `<p>hi, i'm riley! welcome to my garden :3<br />i use she/her pronouns and i'm 15 years old</p>`;
+          pageText.innerHTML = `<p>haii! my name's Riley and i'm 15 years old from England! i'm interested in (but not really good at :c) computers and coding. i do minecraft development in skript, and i like pokémon (my favourite being Latias :3)!</p>`;
         } else if (page === 'contact') {
           homeContent.style.display = 'none';
           pageText.innerHTML = `
@@ -213,10 +233,23 @@
             <p><a href="https://namemc.com/profile/9om" target="_blank" rel="noopener noreferrer">minecraft account</a></p>
             <p><a href="https://discord.gg/zP49RhAQhr" target="_blank" rel="noopener noreferrer">twin discord server</a></p>
           `;
-        } else if (page === 'gallery') {
+        } else if (page === 'friends') {
           homeContent.style.display = 'none';
           pageText.innerHTML = `
-            <p>gallery coming soon! stay tuned 🖼️</p>
+            <div class="friends-list">
+              <div class="friend-row">
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1011756509501333532/3dbd5d8f8fd11623ef8123216934ac32.png?size=1024" alt="Intallact" /><span>Intallact</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png?size=1024" alt="Clokky" /><span>Clokky</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png?size=1024" alt="Alura" /><span>Alura</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png?size=1024" alt="Zoizox" /><span>Zoizox</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1126112802185162812/77df83aeeabf5d868db0c17c81416d76.png?size=1024" alt="AccursedFir" /><span>AccursedFir</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/233302676618608640/188cb4da0ba42498d4865d353a66aea4.png?size=1024" alt="Yuri" /><span>Yuri</span></div>
+              </div>
+              <div class="friend-row">
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/943648040043044875/8d6444c0c17009553005530aff078770.png?size=1024" alt="Bladed" /><span>Bladed</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png?size=1024" alt="Tara" /><span>Tara</span></div>
+              </div>
+            </div>
           `;
         }
       });
