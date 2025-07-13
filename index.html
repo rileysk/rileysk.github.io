@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>riley's garden :3</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
   <style>
+    /* Cursor styles */
+    html, body {
+      cursor: url('latias.gif') 32 32, auto;
+    }
+
+    a:hover,
+    button:hover {
+      cursor: url('latias-hover.gif') 32 32, pointer;
+    }
+
     body {
       background-color: #2f2f2f;
       margin: 0;
@@ -18,6 +28,15 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
+      background-image: url('stars-pink.gif');
+      background-size: cover;
+      background-repeat: repeat;
+      animation: backgroundScroll 60s linear infinite;
+    }
+
+    @keyframes backgroundScroll {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
     }
 
     @media (max-width: 768px) {
@@ -46,7 +65,6 @@
       padding: 10px;
       border-bottom: 1px solid #444;
       background-color: transparent;
-      font-family: 'Source Code Pro', monospace;
     }
 
     .toolbar button {
@@ -87,7 +105,6 @@
       gap: 8px;
       font-weight: 600;
       font-size: 1.1rem;
-      font-family: 'Source Code Pro', monospace;
     }
 
     .status-dot {
@@ -96,7 +113,6 @@
       border-radius: 50%;
       background-color: gray;
       border: 2px solid #1e1e1e;
-      box-sizing: content-box;
       animation: pulse 2s infinite;
       flex-shrink: 0;
     }
@@ -170,6 +186,19 @@
       height: 40px;
       border-radius: 50%;
     }
+
+    .friend span {
+      font-weight: bold;
+    }
+
+    .friend span.color-1 { color: #FF8181; }   /* Intallact */
+    .friend span.color-2 { color: #66b2b2; }   /* Clokky */
+    .friend span.color-3 { color: #EA6DB1; }   /* Alura */
+    .friend span.color-4 { color: #9B58FF; }   /* Zoizox */
+    .friend span.color-5 { color: #F2C6DE; }   /* Tara */
+    .friend span.color-6 { color: #B381FF; }   /* Bladed */
+    .friend span.color-7 { color: #F2C6DE; }   /* Accursed */
+    .friend span.color-8 { color: #6D77D4; }   /* Yuri */
   </style>
 </head>
 <body>
@@ -180,7 +209,7 @@
       <button data-page="links">#links</button>
       <button data-page="friends">#friends</button>
     </div>
-    <div id="slide-content" style="padding: 20px; font-family: 'Source Code Pro', monospace;">
+    <div id="slide-content" style="padding: 20px;">
       <div class="profile-container" id="home-content">
         <img src="profile-picture.png" alt="Profile Picture" class="profile-pic" />
         <div class="name-container">
@@ -199,6 +228,42 @@
     const pageText = document.getElementById('page-text');
     const homeContent = document.getElementById('home-content');
     const statusDot = document.getElementById('status-dot');
+
+    // Your Discord user ID to fetch your status from Lanyard
+    const yourDiscordId = '1142433636822548601';
+
+    // Function to update status dot from Lanyard API
+    async function updateStatus() {
+      try {
+        const res = await fetch(`https://api.lanyard.rest/v1/users/${yourDiscordId}`);
+        const data = await res.json();
+
+        if(data && data.success) {
+          const discordStatus = data.data.discord_status; // online, idle, dnd, offline
+          statusDot.classList.remove('online', 'idle', 'dnd', 'offline');
+
+          if (discordStatus === 'online') {
+            statusDot.classList.add('online');
+          } else if (discordStatus === 'idle') {
+            statusDot.classList.add('idle');
+          } else if (discordStatus === 'dnd') {
+            statusDot.classList.add('dnd');
+          } else {
+            statusDot.classList.add('offline');
+          }
+        } else {
+          statusDot.classList.remove('online', 'idle', 'dnd');
+          statusDot.classList.add('offline');
+        }
+      } catch (error) {
+        statusDot.classList.remove('online', 'idle', 'dnd');
+        statusDot.classList.add('offline');
+      }
+    }
+
+    // Update status on page load and every 30 seconds
+    updateStatus();
+    setInterval(updateStatus, 30000);
 
     function setActiveButton(page) {
       buttons.forEach(btn => {
@@ -229,25 +294,23 @@
         } else if (page === 'links') {
           homeContent.style.display = 'none';
           pageText.innerHTML = `
-            <p><a href="https://github.com/rileysk" target="_blank" rel="noopener noreferrer">github</a></p>
-            <p><a href="https://namemc.com/profile/9om" target="_blank" rel="noopener noreferrer">minecraft account</a></p>
-            <p><a href="https://discord.gg/zP49RhAQhr" target="_blank" rel="noopener noreferrer">twin discord server</a></p>
+            <p><a href="https://github.com/rileysk" target="_blank">github</a></p>
+            <p><a href="https://namemc.com/profile/9om" target="_blank">minecraft account</a></p>
+            <p><a href="https://discord.gg/zP49RhAQhr" target="_blank">twin discord server</a></p>
           `;
         } else if (page === 'friends') {
           homeContent.style.display = 'none';
           pageText.innerHTML = `
             <div class="friends-list">
               <div class="friend-row">
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1011756509501333532/3dbd5d8f8fd11623ef8123216934ac32.png?size=1024" alt="Intallact" /><span>Intallact</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png?size=1024" alt="Clokky" /><span>Clokky</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png?size=1024" alt="Alura" /><span>Alura</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png?size=1024" alt="Zoizox" /><span>Zoizox</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1126112802185162812/77df83aeeabf5d868db0c17c81416d76.png?size=1024" alt="AccursedFir" /><span>AccursedFir</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/233302676618608640/188cb4da0ba42498d4865d353a66aea4.png?size=1024" alt="Yuri" /><span>Yuri</span></div>
-              </div>
-              <div class="friend-row">
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/943648040043044875/8d6444c0c17009553005530aff078770.png?size=1024" alt="Bladed" /><span>Bladed</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png?size=1024" alt="Tara" /><span>Tara</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1011756509501333532/3dbd5d8f8fd11623ef8123216934ac32.png" alt="Intallact" /><span class="color-1">Intallact</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky" /><span class="color-2">Clokky</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura" /><span class="color-3">Alura</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox" /><span class="color-4">Zoizox</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara" /><span class="color-5">Tara</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/943648040043044875/8d6444c0c17009553005530aff078770.png" alt="Bladed" /><span class="color-6">Bladed</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1126112802185162812/77df83aeeabf5d868db0c17c81416d76.png" alt="AccursedFir" /><span class="color-7">AccursedFir</span></div>
+                <div class="friend"><img src="https://cdn.discordapp.com/avatars/233302676618608640/188cb4da0ba42498d4865d353a66aea4.png" alt="Yuri" /><span class="color-8">Yuri</span></div>
               </div>
             </div>
           `;
@@ -257,28 +320,11 @@
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
-        showPage(button.dataset.page);
+        if (!button.classList.contains('active')) {
+          showPage(button.dataset.page);
+        }
       });
     });
-
-    function updateStatus() {
-      fetch("https://api.lanyard.rest/v1/users/1142433636822548601")
-        .then(res => res.json())
-        .then(data => {
-          if (!data.success) return;
-          const status = data.data.discord_status;
-          statusDot.classList.remove("online", "idle", "dnd", "offline");
-          if (["online", "idle", "dnd", "offline"].includes(status)) {
-            statusDot.classList.add(status);
-          } else {
-            statusDot.classList.add("offline");
-          }
-        })
-        .catch(err => console.error("Error fetching Lanyard status:", err));
-    }
-
-    updateStatus();
-    setInterval(updateStatus, 30000);
   </script>
 </body>
 </html>
