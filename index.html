@@ -1,339 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Open Graph Tags -->
   <meta property="og:title" content="riley.cat" />
   <meta property="og:description" content="heh im a cat meow :3 *sheemu ur a bot meow :3*" />
   <meta property="og:url" content="https://riley.cat" />
   <meta property="og:image" content="https://imghost.net/ib/iip171IJ8VFbRrw_1752612092.png" />
   <meta property="og:type" content="cat meow" />
-
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>riley's garden :3</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>riley.cat</title>
   <style>
-    /* Cursor styles */
-    html, body {
-      cursor: url('latias.gif') 32 32, auto;
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+    :root {
+      --bg: #0b0b12;
+      --sidebar-bg: #161320;
+      --border: #5e4b76;
+      --text: #dbcdf0;
+      --link-hover: #b8e1e9;
+      --gray-text: #999999;
+      --section1: linear-gradient(135deg, #161320, #1f1b2e);
+      --section2: linear-gradient(135deg, #1a1e2d, #2b2f3e);
+      --section3: linear-gradient(135deg, #171b26, #2c3349);
+      --section4: linear-gradient(135deg, #10121a, #1c1f2b);
     }
 
-    a:hover,
-    button:hover {
-      cursor: url('latias-hover.gif') 32 32, pointer;
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: #2f2f2f;
       margin: 0;
       padding: 0;
-      font-family: 'Source Code Pro', monospace;
-      color: #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      background-image: url('stars-pink.gif');
-      background-size: cover;
-      background-repeat: repeat;
-      animation: backgroundScroll 60s linear infinite;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    @keyframes backgroundScroll {
-      from { background-position: 0 0; }
-      to { background-position: 1000px 1000px; }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        height: auto;
-        padding: 20px;
-        align-items: flex-start;
-        overflow: auto;
-      }
-    }
-
-    .main-wrapper {
-      width: 90%;
-      max-width: 640px;
-      border-radius: 8px;
-      background-color: #1e1e1e;
-      box-sizing: border-box;
+    .sidebar {
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      background: var(--sidebar-bg);
+      border: 2px solid var(--border);
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      gap: 2rem;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.07);
+      z-index: 1000;
     }
 
-    .toolbar {
+    .sidebar a {
+      color: var(--text);
+      font-size: 1.4rem;
+      text-align: center;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      color: var(--link-hover);
+    }
+
+    section {
+      min-height: 100vh;
+      padding-left: 120px;
       display: flex;
-      justify-content: space-around;
-      padding: 10px;
-      border-bottom: 1px solid #444;
-      background-color: transparent;
-    }
-
-    .toolbar button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-weight: normal;
-      font-size: 1rem;
-      cursor: pointer;
-      font-family: 'Source Code Pro', monospace;
-    }
-
-    .toolbar button.active {
-      font-weight: bold;
-      color: pink;
-      cursor: default;
-    }
-
-    .profile-container {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       position: relative;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 10px;
-      gap: 12px;
+      animation: fadeIn 1s ease both;
     }
 
-    .profile-pic {
-      width: 100px;
-      height: 100px;
+    section h1 {
+      margin-top: 40px;
+      font-size: 3rem;
+      color: var(--text);
+      text-shadow: 0 0 10px rgba(255,255,255,0.1);
+      text-align: center;
+      width: 100%;
+      padding-left: 0;
+      align-self: center;
+    }
+
+    #home {
+      background: var(--section1);
+      justify-content: flex-start;
+      gap: 2rem;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    #home img.profile-pic {
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
+      border: 3px solid var(--border);
+      box-shadow: 0 0 12px rgba(255,255,255,0.2);
       object-fit: cover;
+      margin: 2rem auto 0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    #home img.profile-pic:hover {
+      transform: scale(1.08) rotate(5deg);
+      box-shadow: 0 0 20px rgba(184, 225, 233, 0.8);
     }
 
-    .name-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-      font-size: 1.1rem;
+    #home .profile-name {
+      margin-top: 1rem;
+      font-size: 2.8rem;
+      color: var(--link-hover);
+      font-weight: 700;
+    }
+    #home .profile-subtext {
+      margin-top: 0.25rem;
+      font-size: 1.2rem;
+      color: var(--gray-text);
+      font-weight: 400;
     }
 
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: gray;
-      border: 2px solid #1e1e1e;
-      animation: pulse 2s infinite;
-      flex-shrink: 0;
+    #projects {
+      background: var(--section2);
     }
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
-      50% { box-shadow: 0 0 6px 3px rgba(255, 255, 255, 0.3); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+    #contact {
+      background: var(--section3);
     }
 
-    .online { background-color: #43b581; animation: pulse-green 2s infinite; }
-    .idle { background-color: #faa61a; animation: pulse-yellow 2s infinite; }
-    .dnd { background-color: #f04747; animation: pulse-red 2s infinite; }
-    .offline { background-color: gray; animation: pulse-gray 2s infinite; }
-
-    @keyframes pulse-green {
-      0% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
-      50% { box-shadow: 0 0 8px 4px rgba(67, 181, 129, 0.4); }
-      100% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
-    }
-    @keyframes pulse-yellow {
-      0% { box-shadow: 0 0 0 0 rgba(250, 166, 26, 0.7); }
-      50% { box-shadow: 0 0 8px 4px rgba(250, 166, 26, 0.4); }
-      100% { box-shadow: 0 0 0 0 rgba(250, 166, 26, 0.7); }
-    }
-    @keyframes pulse-red {
-      0% { box-shadow: 0 0 0 0 rgba(240, 71, 71, 0.7); }
-      50% { box-shadow: 0 0 8px 4px rgba(240, 71, 71, 0.4); }
-      100% { box-shadow: 0 0 0 0 rgba(240, 71, 71, 0.7); }
-    }
-    @keyframes pulse-gray {
-      0% { box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7); }
-      50% { box-shadow: 0 0 8px 4px rgba(128, 128, 128, 0.4); }
-      100% { box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.7); }
+    #friends {
+      background: var(--section4);
     }
 
-    #page-text {
-      transition: opacity 0.3s ease-in-out;
-    }
-
-    a {
-      color: #7fff90;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .friends-list {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .friend-row {
-      display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 2rem;
+      justify-content: center;
+      margin: 2rem 0;
     }
 
     .friend {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 48%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1rem;
+      width: 240px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .friend:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.1);
     }
 
     .friend img {
-      width: 40px;
-      height: 40px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 2px solid var(--border);
     }
 
-    .friend span {
-      font-weight: bold;
+    .friend a {
+      display: inline-block;
+      color: var(--link-hover);
+      margin-top: 0.25rem;
+      font-size: 1rem;
+      text-decoration: none;
     }
 
-    .friend span.color-1 { color: #FF8181; }   /* Intallact */
-    .friend span.color-2 { color: #66b2b2; }   /* Clokky */
-    .friend span.color-3 { color: #EA6DB1; }   /* Alura */
-    .friend span.color-4 { color: #9B58FF; }   /* Zoizox */
-    .friend span.color-5 { color: #F2C6DE; }   /* Tara */
-    .friend span.color-6 { color: #B381FF; }   /* Bladed */
-    .friend span.color-7 { color: #F2C6DE; }   /* Accursed */
-    .friend span.color-8 { color: #6D77D4; }   /* Yuri */
-    .friend span.color-9 { color: #783fc7; }   /* Sheemu */
+    .friend a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .contact-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contact-item i {
+      font-size: 1.8rem;
+    }
+
+    .contact-item a {
+      color: var(--link-hover);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <div class="main-wrapper">
-    <div class="toolbar">
-      <button class="active" data-page="home">#home</button>
-      <button data-page="contact">#contact</button>
-      <button data-page="links">#links</button>
-      <button data-page="friends">#friends</button>
-    </div>
-    <div id="slide-content" style="padding: 20px;">
-      <div class="profile-container" id="home-content">
-        <img src="https://cdn.discordapp.com/avatars/1142433636822548601/a_5cd36a09655eca04cff2bd44379954ce.gif?size=1024" alt="Profile Picture" class="profile-pic" />
-        <div class="name-container">
-          <div id="status-dot" class="status-dot offline"></div>
-          <div class="profile-name">riley <span style="color: gray; font-style: italic; font-weight: normal; font-size: 0.95rem;">(she/her)</span></div>
+
+  <nav class="sidebar">
+    <a href="#home"><i class="fas fa-house"></i></a>
+    <a href="#projects"><i class="fas fa-folder-open"></i></a>
+    <a href="#contact"><i class="fas fa-envelope"></i></a>
+    <a href="#friends"><i class="fas fa-users"></i></a>
+  </nav>
+
+  <section id="home">
+    <h1>Home</h1>
+    <img class="profile-pic" src="https://avatars.githubusercontent.com/u/212234964?v=4" alt="Riley's Profile Picture" />
+    <div class="profile-name">riley</div>
+    <div class="profile-subtext">15, she/her, England</div>
+  </section>
+
+  <section id="projects">
+    <h1>Projects</h1>
+  </section>
+
+  <section id="contact">
+    <h1>Contact</h1>
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fab fa-discord"></i>
+        <a href="https://discord.com/users/1142433636822548601" target="_blank">ry.ly</a>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <a href="mailto:hai@riley.cat">hai@riley.cat</a><br>
+          <a href="mailto:riley@ohara.lol">riley@ohara.lol</a>
         </div>
       </div>
-      <div class="text-content" id="page-text">
-        <p>haii! my name's Riley and i'm 15 years old from England! i'm interested in (but not really good at :c) computers and coding. i do minecraft development in skript, and i like pokémon (my favourite being Latias :3)!</p>
+      <div class="contact-item">
+        <i class="fas fa-link"></i>
+        <a href="https://discord.gg/zP49RhAQhr" target="_blank">Join my Discord server</a>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-user"></i>
+        <a href="https://pronouns.page/@ry.ly" target="_blank">pronouns.page/@ry.ly</a>
+      </div>
+      <div class="contact-item">
+        <i class="fab fa-github"></i>
+        <a href="https://github.com/rileysk" target="_blank">github.com/rileysk</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <script>
-    const buttons = document.querySelectorAll('.toolbar button');
-    const pageText = document.getElementById('page-text');
-    const homeContent = document.getElementById('home-content');
-    const statusDot = document.getElementById('status-dot');
+  <section id="friends">
+    <h1>Friends</h1>
+    <div class="friends-list">
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/1011756509501333532/3dbd5d8f8fd11623ef8123216934ac32.png" alt="Intallact">
+        <p><strong>Intallact 💘</strong></p>
+        <a href="https://intallact.cat" target="_blank">intallact.cat</a>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky">
+        <p><strong>Clokky</strong></p>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura">
+        <p><strong>Alura</strong></p>
+        <a href="https://alurameow.github.io/alura-portofolio/" target="_blank">Website</a>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox">
+        <p><strong>Zoizox</strong></p>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara">
+        <p><strong>Tara</strong></p>
+        <a href="https://en.pronouns.page/@Ta.wa" target="_blank">en.pronouns.page/@Ta.wa</a>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed">
+        <p><strong>Bladed</strong></p>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png?size=1024" alt="AccursedFir">
+        <p><strong>AccursedFir</strong></p>
+      </div>
+      <div class="friend">
+        <img src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png?size=1024" alt="Sheemeow">
+        <p><strong>Sheemeow</strong></p>
+        <a href="https://obvschmu.github.io/" target="_blank">Website</a>
+      </div>
+      <div class="friend">
+        <img src="https://yeahjenni.xyz/pfp.png" alt="Jenni">
+        <p><strong>Jenni</strong></p>
+        <a href="https://yeahjenni.xyz" target="_blank">yeahjenni.xyz</a>
+      </div>
+    </div>
+  </section>
 
-    // Your Discord user ID to fetch your status from Lanyard
-    const yourDiscordId = '1142433636822548601';
-
-    // Function to update status dot from Lanyard API
-    async function updateStatus() {
-      try {
-        const res = await fetch(`https://api.lanyard.rest/v1/users/${yourDiscordId}`);
-        const data = await res.json();
-
-        if(data && data.success) {
-          const discordStatus = data.data.discord_status; // online, idle, dnd, offline
-          statusDot.classList.remove('online', 'idle', 'dnd', 'offline');
-
-          if (discordStatus === 'online') {
-            statusDot.classList.add('online');
-          } else if (discordStatus === 'idle') {
-            statusDot.classList.add('idle');
-          } else if (discordStatus === 'dnd') {
-            statusDot.classList.add('dnd');
-          } else {
-            statusDot.classList.add('offline');
-          }
-        } else {
-          statusDot.classList.remove('online', 'idle', 'dnd');
-          statusDot.classList.add('offline');
-        }
-      } catch (error) {
-        statusDot.classList.remove('online', 'idle', 'dnd');
-        statusDot.classList.add('offline');
-      }
-    }
-
-    // Update status on page load and every 30 seconds
-    updateStatus();
-    setInterval(updateStatus, 30000);
-
-    function setActiveButton(page) {
-      buttons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.page === page);
-      });
-    }
-
-    function fadeOutIn(callback) {
-      pageText.style.opacity = 0;
-      setTimeout(() => {
-        callback();
-        pageText.style.opacity = 1;
-      }, 300);
-    }
-
-    function showPage(page) {
-      setActiveButton(page);
-      fadeOutIn(() => {
-        if (page === 'home') {
-          homeContent.style.display = 'flex';
-          pageText.innerHTML = `<p>haii! my name's Riley and i'm 15 years old from England! i'm interested in (but not really good at :c) computers and coding. i do minecraft development in skript, and i like pokémon (my favourite being Latias :3)!</p>`;
-        } else if (page === 'contact') {
-          homeContent.style.display = 'none';
-          pageText.innerHTML = `
-            <p>email: <a href="mailto:hai@riley.cat">hai@riley.cat</a></p>
-            <p>discord: <a href="https://discord.com/users/1142433636822548601">ry.ly</a></p>
-          `;
-        } else if (page === 'links') {
-          homeContent.style.display = 'none';
-          pageText.innerHTML = `
-            <p><a href="https://github.com/rileysk" target="_blank">github</a></p>
-            <p><a href="https://namemc.com/profile/9om" target="_blank">minecraft account</a></p>
-            <p><a href="https://discord.gg/zP49RhAQhr" target="_blank">twin discord server</a></p>
-          `;
-        } else if (page === 'friends') {
-          homeContent.style.display = 'none';
-          pageText.innerHTML = `
-            <div class="friends-list">
-              <div class="friend-row">
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1011756509501333532/3dbd5d8f8fd11623ef8123216934ac32.png" alt="Intallact" /><span class="color-1">Intallact</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky" /><span class="color-2">Clokky</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura" /><span class="color-3">Alura</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox" /><span class="color-4">Zoizox</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara" /><span class="color-5">Tara</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed" /><span class="color-6">Bladed</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png?size=1024" alt="AccursedFir" /><span class="color-7">AccursedFir</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/233302676618608640/188cb4da0ba42498d4865d353a66aea4.png" alt="Yuri" /><span class="color-8">Yuri</span></div>
-                <div class="friend"><img src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png?size=1024" alt="Sheemeow" /><span class="color-9">Sheemeow</span></div>
-              </div>
-            </div>
-          `;
-        }
-      });
-    }
-
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        if (!button.classList.contains('active')) {
-          showPage(button.dataset.page);
-        }
-      });
-    });
-  </script>
 </body>
 </html>
