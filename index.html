@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta property="og:title" content="riley.cat" />
-  <meta property="og:description" content="heh im a cat meow :3" />
-  <meta property="og:url" content="https://riley.cat" />
-  <meta property="og:image" content="https://c.tenor.com/r8aaSTstt-wAAAAd/tenor.gif" />
-  <meta property="og:type" content="cat meow" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>riley.cat</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <style>
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
+  <!-- Meta Data -->
+  <meta name="description" content="she/her • 15 • England"> 
+  <meta property="og:title" content="riley!"> 
+  <meta property="og:image" content="https://cdn.discordapp.com/avatars/1142433636822548601/a_5cd36a09655eca04cff2bd44379954ce.gif?size=1024">
+  <meta property="og:description" content="Projects, contact info, and friends of Riley.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn.discordapp.com/avatars/1142433636822548601/a_5cd36a09655eca04cff2bd44379954ce.gif?size=64" type="image/gif">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
     :root {
       --bg: #0b0b12;
       --sidebar-bg: #161320;
@@ -80,43 +83,64 @@
       margin-top: 40px;
       font-size: 3rem;
       color: var(--text);
-      text-shadow: 0 0 10px rgba(255,255,255,0.1);
       text-align: center;
       width: 100%;
-      padding-left: 0;
-      align-self: center;
     }
 
     #home {
       background: var(--section1);
-      justify-content: flex-start;
-      gap: 2rem;
-      text-align: center;
       padding-top: 80px;
+      text-align: center;
     }
 
-    #home img.profile-pic {
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      border: 3px solid var(--border);
-      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+    .banner-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .banner-container .banner {
+      width: 500px;
+      height: 180px;
       object-fit: cover;
-      margin: 2rem auto 0;
+      border-radius: 1.25rem;
+      margin-bottom: -90px;
+      z-index: 1;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
     }
-    #home img.profile-pic:hover {
+
+    .banner-container .banner:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(184, 225, 233, 0.4);
+    }
+
+    .banner-container .profile-pic {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 4px solid var(--border);
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+      object-fit: cover;
+      z-index: 2;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .banner-container .profile-pic:hover {
       transform: scale(1.08) rotate(5deg);
       box-shadow: 0 0 20px rgba(184, 225, 233, 0.8);
     }
 
     #home .profile-name {
       margin-top: 1rem;
-      font-size: 2.8rem;
+      font-size: 3rem;
       color: var(--link-hover);
       font-weight: 700;
     }
+
     #home .profile-subtext {
       margin-top: 0.25rem;
       font-size: 1.2rem;
@@ -147,36 +171,90 @@
       }
     }
 
-    .friends-list {
-      display: flex;
-      flex-wrap: wrap;
+    .projects-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      justify-content: center;
+      margin: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 2rem;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1s ease both;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.1);
+    }
+
+    .project-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+    }
+
+    .project-card h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: var(--link-hover);
+    }
+
+    .project-type {
+      color: var(--gray-text);
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-description {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .friends-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
       margin: 2rem 0;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 2rem;
     }
 
     .friend {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1rem;
-      width: 240px;
+      border-radius: 1.5rem;
+      padding: 2rem;
       text-align: center;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1.2rem;
     }
 
     .friend:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
     }
 
     .friend img {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       margin-bottom: 1rem;
-      border: 2px solid var(--border);
+      border: 3px solid var(--border);
     }
 
     .friend a {
@@ -189,6 +267,17 @@
 
     .friend a:hover {
       text-decoration: underline;
+    }
+
+    .heart-icon {
+      color: hotpink;
+      animation: pulse 1s infinite ease-in-out;
+      margin-left: 0.5rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
     }
 
     .contact-info {
@@ -237,14 +326,46 @@
 
   <section id="home">
     <h1>Home</h1>
-    <img class="profile-pic" src="https://avatars.githubusercontent.com/u/212234964?v=4" alt="Riley's Profile Picture" />
+    <div class="banner-container">
+      <img class="banner" src="https://cdn.discordapp.com/banners/1142433636822548601/a_171b63d8520b3aed7cd46d8047eaa9d3.gif?size=1024" alt="Banner" />
+      <img class="profile-pic" src="https://cdn.discordapp.com/avatars/1142433636822548601/a_5cd36a09655eca04cff2bd44379954ce.gif?size=1024" alt="Riley's Profile Picture" />
+    </div>
     <div class="profile-name">riley</div>
     <div class="profile-subtext">15, she/her, England</div>
   </section>
 
   <section id="projects">
     <h1>Projects</h1>
+    <div class="projects-list">
+      <div class="project-card">
+        <img class="project-icon" src="https://cdn.discordapp.com/icons/1384568369742745611/654594ef27a5829fe5b76e8d161a7cae.png?size=512" alt="RKPrac Icon">
+        <h2>Random Kits Practice</h2>
+        <p class="project-type">Minecraft Server</p>
+        <p class="project-description">
+          RKPrac was originally founded by Intallact in 2022–2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice. It's still up! Join using: <code>na-rkprac.my.pebble.host</code> Averages 3–10 players.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <img class="project-icon" src="https://minecraft.wiki/images/Enchanted_Netherite_Sword.gif?ab61e" alt="Yuzai Icon">
+        <h2>Yuzai / CaveKitz</h2>
+        <p class="project-type">Minecraft Server</p>
+        <p class="project-description">
+          CaveKitz was a server made by me, Witherred & Intallact, that gave you a random kit whenever you died. You were limited to a 200x200 area to mine, kill, and more. The original was shut down due to suspension by the ImpendMC RandomKits owner. It rebranded to Yuzai, but was shut down shortly after due to plugin issues. Averaged 10–35 players.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <img class="project-icon" src="https://c.tenor.com/r8aaSTstt-wAAAAd/tenor.gif" alt="Ohara">
+        <h2>Ohara.lol</h2>
+        <p class="project-type">Website</p>
+        <p class="project-description">
+          Silly little website I made after watching the Pokémon side series <em>Paldean Winds</em>, "Breathe Out". It features a gif of Ohara (one of the protagonists) and her partner Fuecoco!
+        </p>
+      </div>
+    </div>
   </section>
+
 
   <section id="contact">
     <h1>Contact</h1>
@@ -280,45 +401,17 @@
     <div class="friends-list">
       <div class="friend">
         <img src="https://cdn.discordapp.com/avatars/1011756509501333532/3dbd5d8f8fd11623ef8123216934ac32.png" alt="Intallact">
-        <p><strong>Intallact 💘</strong></p>
+        <p><strong>Intallact <i class="fas fa-heart heart-icon"></i></strong></p>
         <a href="https://intallact.cat" target="_blank">intallact.cat</a>
       </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky">
-        <p><strong>Clokky</strong></p>
-      </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura">
-        <p><strong>Alura</strong></p>
-        <a href="https://alurameow.github.io/alura-portofolio/" target="_blank">Website</a>
-      </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox">
-        <p><strong>Zoizox</strong></p>
-      </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara">
-        <p><strong>Tara</strong></p>
-        <a href="https://en.pronouns.page/@Ta.wa" target="_blank">en.pronouns.page/@Ta.wa</a>
-      </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed">
-        <p><strong>Bladed</strong></p>
-      </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png?size=1024" alt="AccursedFir">
-        <p><strong>AccursedFir</strong></p>
-      </div>
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png?size=1024" alt="Sheemeow">
-        <p><strong>Sheemeow</strong></p>
-        <a href="https://obvschmu.github.io/" target="_blank">Website</a>
-      </div>
-      <div class="friend">
-        <img src="https://yeahjenni.xyz/pfp.png" alt="Jenni">
-        <p><strong>Jenni</strong></p>
-        <a href="https://yeahjenni.xyz" target="_blank">yeahjenni.xyz</a>
-      </div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky"><p><strong>Clokky</strong></p></div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura"><p><strong>Alura</strong></p><a href="https://alurameow.github.io/alura-portofolio/" target="_blank">alurameow.github.io</a></div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox"><p><strong>Zoizox</strong></p></div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara"><p><strong>Tara</strong></p><a href="https://en.pronouns.page/@Ta.wa" target="_blank">pronouns.page/@Ta.wa</a></div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed"><p><strong>Bladed</strong></p></div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png?size=1024" alt="AccursedFir"><p><strong>AccursedFir</strong></p></div>
+      <div class="friend"><img src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png?size=1024" alt="Sheemeow"><p><strong>Sheemeow</strong></p><a href="https://obvschmu.github.io/" target="_blank">obvschmu.github.io</a></div>
+      <div class="friend"><img src="https://yeahjenni.xyz/pfp.png" alt="Jenni"><p><strong>Jenni</strong></p><a href="https://yeahjenni.xyz" target="_blank">yeahjenni.xyz</a></div>
     </div>
   </section>
 
