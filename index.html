@@ -68,6 +68,28 @@
       color: var(--link-hover);
     }
 
+    .music-player {
+      margin-top: 2rem;
+      text-align: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-player button {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .music-player button:hover {
+      color: v
+    }
+
     section {
       min-height: 100vh;
       padding-left: 120px;
@@ -322,7 +344,15 @@
     <a href="#projects"><i class="fas fa-folder-open"></i></a>
     <a href="#contact"><i class="fas fa-envelope"></i></a>
     <a href="#friends"><i class="fas fa-users"></i></a>
+
+    <div class="music-player">
+      <button id="playPauseBtn" title="Play/Pause">
+        <i class="fas fa-play"></i>
+      </button>
+    </div>
   </nav>
+
+  <audio id="bg-music" src="music.mp3" loop></audio>
 
   <section id="home">
     <h1>Home</h1>
@@ -342,7 +372,7 @@
         <h2>Random Kits Practice</h2>
         <p class="project-type">Minecraft Server</p>
         <p class="project-description">
-          RKPrac was originally founded by Intallact in 2022–2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice. It's still up! Join using: <code>na-rkprac.my.pebble.host</code> Averages 3–10 players.
+          RKPrac was originally founded by Intallact in 2022-2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice. It's still up! Join using: <code>na-rkprac.my.pebble.host</code> Averages 3–10 players.
         </p>
       </div>
 
@@ -414,6 +444,37 @@
       <div class="friend"><img src="https://yeahjenni.xyz/pfp.png" alt="Jenni"><p><strong>Jenni</strong></p><a href="https://yeahjenni.xyz" target="_blank">yeahjenni.xyz</a></div>
     </div>
   </section>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const icon = playPauseBtn.querySelector('i');
+
+    window.addEventListener('load', () => {
+      music.volume = 0.25;
+      music.play().then(() => {
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+      }).catch(() => {
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play');
+      });
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+      if (music.paused) {
+        music.play();
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+      } else {
+        music.pause();
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play');
+      }
+    });
+  </script>
+
+
 
 </body>
 </html>
