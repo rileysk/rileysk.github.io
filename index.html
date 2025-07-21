@@ -349,6 +349,49 @@
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
     }
 
+  #experience {
+    background: var(--section3);
+}
+
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    width: 90%;
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+
+  .experience-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .experience-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  .experience-item h3 {
+    margin-top: 0;
+    color: var(--link-hover);
+    font-size: 1.4rem;
+  }
+
+  .experience-item span {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+  }
+
+
+
   </style>
 </head>
 <body>
@@ -357,6 +400,7 @@
     <a href="#home"><i class="fas fa-house"></i></a>
     <a href="#projects"><i class="fas fa-folder-open"></i></a>
     <a href="#contact"><i class="fas fa-envelope"></i></a>
+    <a href="#experience"><i class="fas fa-star"></i></a>
     <a href="#friends"><i class="fas fa-users"></i></a>
 
     <div class="music-player">
@@ -474,6 +518,23 @@
       </div>
     </div>
   </section>
+
+  <section id="experience">
+    <h1>Experience</h1>
+    <div class="experience-list">
+      <div class="experience-item">
+        <h3>Valoria Survival</h3>
+        <span>2025 - Present • 800+ Members</span>
+        <p>Currently, I am the most active staff member on Valoria Survival. I was originally Discord Moderator before getting promoted to Helper, and then Moderator, where I now stand.</p>
+      </div>
+      <div class="experience-item">
+        <h3>Crystal Ranked</h3>
+        <span>2025 – Present • 4.9k+ Members</span>
+        <p>I am currently set as Staff Manager on CrystalRanked (discord.gg/crystalranked), a Vanilla PvP Tier List owned by GalleryWalk and Kaqzy (same owners as ValoriaSurvival). </p>
+      </div>
+    </div>
+  </section>
+
 
   <section id="friends">
     <h1>Friends</h1>
