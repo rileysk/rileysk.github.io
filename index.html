@@ -1,593 +1,566 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>riley.cat ♡</title>
 
   <!-- Meta Data -->
   <meta name="description" content="she/her • 15 • England"> 
   <meta property="og:title" content="riley!"> 
   <meta property="og:image" content="https://riley.cat/assets/pfp.gif">
   <meta property="og:description" content="meowmeow purr nya meow">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>riley → W.I.P</title>
 
-  <!-- Favicon -->
-  <link rel="icon" href="https://avatars.githubusercontent.com/u/212234964?s=400&u=d8de903c4228e32a3db18932b282b507660870cf&v=4" type="image/gif">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     :root {
-      --bg: #0b0b12;
-      --sidebar-bg: #161320;
-      --border: #5e4b76;
-      --text: #dbcdf0;
-      --link-hover: #b8e1e9;
-      --gray-text: #999999;
-      --section1: linear-gradient(135deg, #161320, #1f1b2e);
-      --section2: linear-gradient(135deg, #1a1e2d, #2b2f3e);
-      --section3: linear-gradient(135deg, #171b26, #2c3349);
-      --section4: linear-gradient(135deg, #10121a, #1c1f2b);
+      --bg: #0e0f10;
+      --fg: #e9e9e9;
+      --muted: #9e9e9e;
+      --accent: #ff5fa3; /* pink */
+      --accent-2: #5effb5; /* mint */
+      --maxw: 1050px;
+      --shadow: 0 12px 28px rgba(0,0,0,.28);
+      --radius: 16px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--fg);
+      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    .sidebar {
+    /* grunge / nature layers */
+    body::before, body::after {
+      content: "";
       position: fixed;
-      top: 50%;
-      left: 20px;
-      transform: translateY(-50%);
-      background: var(--sidebar-bg);
-      border: 2px solid var(--border);
-      border-radius: 2rem;
-      padding: 2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.07);
-      z-index: 1000;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+    /* mossy gradient wash */
+    body::before {
+      background: radial-gradient(circle at 20% 10%, rgba(94,255,181,.05), transparent 60%),
+                  radial-gradient(circle at 80% 90%, rgba(255,95,163,.06), transparent 70%),
+                  linear-gradient(135deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
+      mix-blend-mode: screen;
+      filter: contrast(120%) saturate(120%);
+    }
+    /* noise */
+    body::after {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="300" height="300" filter="url(%23n)" opacity=".06"/></svg>');
+      background-size: 200px 200px;
+      opacity: .35;
+      z-index: -1;
     }
 
-    .sidebar a {
-      color: var(--text);
-      font-size: 1.4rem;
-      text-align: center;
-      transition: color 0.3s ease;
-    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    .sidebar a:hover {
-      color: var(--link-hover);
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(20,20,21,.6);
+      backdrop-filter: blur(9px) saturate(140%);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      z-index: 999;
     }
-
-    .music-player {
-      margin-top: 2rem;
-      text-align: center;
-      position: relative;
+    nav .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      padding: .75rem 1rem;
+    }
+    nav .brand {
+      display: flex; align-items: center; gap: .5rem;
+      font-family: 'JetBrains Mono', monospace; font-weight: 600;
+    }
+    nav .brand img { width: 28px; height: 28px; border-radius: 50%; }
+    nav ul {
+      list-style: none; margin: 0; padding: 0; display: flex; gap: .75rem; flex-wrap: wrap;
+      font-family: 'JetBrains Mono', monospace; font-size: .9rem;
+    }
+    nav a {
+      display: inline-block; padding: .35rem .65rem; border-radius: 999px;
+      transition: background .2s, color .2s;
+      color: var(--fg);
+    }
+    nav a.active, nav a:hover {
+      background: rgba(255,255,255,.06);
+      color: #fff;
     }
 
-    .music-player button {
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    .music-player button:hover {
-      color: v
-    }
+    main { margin-top: 70px; }
 
     section {
-      min-height: 100vh;
-      padding-left: 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 5rem 1rem 4rem;
       position: relative;
-      animation: fadeIn 1s ease both;
+    }
+    section:not(:last-child) {
+      border-bottom: 1px dashed rgba(255,255,255,.04);
     }
 
-    section h1 {
-      margin-top: 40px;
-      font-size: 3rem;
-      color: var(--text);
-      text-align: center;
-      width: 100%;
-    }
-
-    #home {
-      background: var(--section1);
-      padding-top: 80px;
-      text-align: center;
-    }
-
-    .banner-container {
+    .section-title {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      margin: 0 0 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex; align-items: center; gap: .6rem;
+      letter-spacing: -0.02em;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    }
+    .section-title::before {
+      content: "";
+      width: 24px; height: 2px; background: var(--accent);
     }
 
-    .banner-container .banner {
-      width: 500px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 1.25rem;
-      margin-bottom: -90px;
-      z-index: 1;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .banner-container .banner:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(184, 225, 233, 0.4);
-    }
-
-    .banner-container .profile-pic {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 4px solid var(--border);
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-      object-fit: cover;
-      z-index: 2;
-      position: relative;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .banner-container .profile-pic:hover {
-      transform: scale(1.08) rotate(5deg);
-      box-shadow: 0 0 20px rgba(184, 225, 233, 0.8);
-    }
-
-    #home .profile-name {
-      margin-top: 1rem;
-      font-size: 3rem;
-      color: var(--link-hover);
-      font-weight: 700;
-    }
-
-    #home .profile-subtext {
-      margin-top: 0.25rem;
-      font-size: 1.2rem;
-      color: var(--gray-text);
-      font-weight: 400;
-    }
-
-    #projects {
-      background: var(--section2);
-    }
-
-    #aboutme {
-      background: var(--section3);
-    }
-
-    #friends {
-      background: var(--section4);
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .projects-list {
+    /* HOME */
+    .hero {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 2rem;
-      width: 100%;
-      max-width: 1000px;
-      padding: 0 2rem;
-    }
-
-    .project-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeIn 1s ease both;
-    }
-
-    .project-card:hover {
-      transform: translateY(-100px);
-      box-shadow: 0 0 18px rgba(255, 255, 255, 0.1);
-    }
-
-    .project-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 0.75rem;
-      margin-bottom: 1rem;
-      object-fit: cover;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-    }
-
-    .project-card h2 {
-      margin-top: 0;
-      font-size: 1.5rem;
-      color: var(--link-hover);
-    }
-
-    .project-type {
-      color: var(--gray-text);
-      font-weight: bold;
-      margin-bottom: 0.75rem;
-    }
-
-    .project-description {
-      font-size: 1rem;
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    .friends-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin: 2rem 0;
-      width: 100%;
-      max-width: 900px;
-      padding: 0 2rem;
-    }
-
-    .friend {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 1.5rem;
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      font-size: 1.2rem;
-    }
-
-    .friend:hover {
-      transform: translateY(-50px);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-    }
-
-    .friend img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      border: 3px solid var(--border);
-    }
-
-    .friend a {
-      display: inline-block;
-      color: var(--link-hover);
-      margin-top: 0.25rem;
-      font-size: 1rem;
-      text-decoration: none;
-    }
-
-    .friend a:hover {
-      text-decoration: underline;
-    }
-
-    .heart-icon {
-      color: rgb(171, 82, 255);
-      animation: pulse 1s infinite ease-in-out;
-      margin-left: 0.5rem;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.7; }
-    }
-
-    .aboutme-info {
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: 150px 1fr;
       gap: 1.5rem;
-      margin-top: 2rem;
-      width: 80%;
-      max-width: 600px;
-    }
-
-    .aboutme-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1rem 1.5rem;
-      font-size: 1.4rem;
-      display: flex;
       align-items: center;
-      gap: 1rem;
     }
-
-    .aboutme-item i {
-      font-size: 1.8rem;
+    .hero img.avatar {
+      width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
+      box-shadow: var(--shadow);
+      border: 3px solid rgba(255,255,255,.06);
+      image-rendering: pixelated;
     }
-
-    .aboutme-item a {
-      color: var(--link-hover);
-      text-decoration: none;
-      font-weight: 500;
+    .hero .meta h1 {
+      font-size: 2.4rem; margin: 0 0 .25rem; line-height: 1.15;
     }
-
-    .aboutme-item a:hover {
-      text-decoration: underline;
-    }
-
-    .about-box {
+    .tagline { color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .about {
       margin-top: 1.5rem;
-      padding: 1.5rem 2rem;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 1.5rem;
-      max-width: 600px;
-      font-size: 1.1rem;
-      line-height: 1.7;
-      text-align: center;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.15rem;
+      backdrop-filter: blur(3px);
     }
 
-  #experience {
-    background: var(--section3);
-}
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .card {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.1rem 1rem 1.2rem;
+      transition: transform .18s ease, box-shadow .18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(0,0,0,.32); }
+    .card h3 { margin: 0 0 .4rem; font-size: 1.1rem; }
+    .card p { color: #ccc; font-size: .95rem; }
+    .card .badge-img {
+      position: absolute;
+      right: .75rem;
+      top: .75rem;
+      width: 54px; height: 54px; object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+    }
 
-  .experience-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin: 2rem 0;
-    width: 90%;
-    max-width: 700px;
-    padding: 0 2rem;
-  }
+    /* LINKS LIST */
+    .links-list {
+      display: grid; gap: .6rem; max-width: 700px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .links-list a {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .65rem .8rem;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 10px;
+    }
+    .links-list img {
+      width: 18px; height: 18px; border-radius: 4px; object-fit: cover;
+    }
 
-  .experience-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    border-radius: 1.25rem;
-    padding: 1.5rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+    /* EXPERIENCE */
+    .xp-item {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.2rem;
+      margin-bottom: .8rem;
+      position: relative;
+    }
+    .xp-item h3 { margin: 0 0 .2rem; }
+    .xp-item .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem; color: var(--muted);
+      margin-bottom: .65rem;
+    }
 
-  .experience-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  }
+    /* FRIENDS */
+    .friends-grid {
+      display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .friend {
+      display: flex; gap: .9rem; align-items: center;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 14px;
+      padding: .8rem .9rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .friend img.pfp {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid rgba(255,255,255,.08);
+    }
+    .friend .name {
+      font-weight: 600; display: flex; align-items: center; gap: .4rem;
+    }
+    .friend .badges { display: flex; gap: .35rem; align-items: center; }
 
-  .experience-item h3 {
-    margin-top: 0;
-    color: var(--link-hover);
-    font-size: 1.4rem;
-  }
+    /* Badges */
+    .badge {
+      display: inline-block;
+      min-width: 12px; min-height: 12px;
+      width: 14px; height: 10px;
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.05);
+    }
+    .badge.bi {
+      background: linear-gradient(180deg, #d60270 33.33%, #9b4f96 33.33% 66.66%, #0038a8 66.66%);
+    }
+    .badge.gay {
+      background: linear-gradient(180deg, #e40303 16.66%, #ff8c00 16.66% 33.33%, #ffed00 33.33% 50%, #008026 50% 66.66%, #004dff 66.66% 83.33%, #750787 83.33%);
+    }
+    .badge.lesbian {
+      background: linear-gradient(180deg, #d52d00 20%, #ef7627 20% 40%, #ffffff 40% 60%, #d162a4 60% 80%, #a30262 80%);
+    }
+    .badge.femboy {
+      background: linear-gradient(180deg, #ff8ef2 33.33%, #ffffff 33.33% 66.66%, #7bc7ff 66.66%);
+    }
+    .badge.heart {
+      width: 14px; height: 14px; position: relative; box-shadow: none; background: transparent;
+    }
+    .badge.heart::before {
+      content: '❤'; color: var(--accent); font-size: 14px; position: absolute; inset: -1px 0 0 0; text-align: center;
+      animation: pulse 1.3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: .9; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    .badge.gd {
+      width: 14px; height: 14px; background: #f5e327; border: 2px solid #000; box-shadow: none;
+      position: relative; border-radius: 2px;
+    }
+    .badge.gd::before, .badge.gd::after {
+      content: ''; position: absolute; background: #000;
+    }
+    .badge.gd::before { width: 3px; height: 3px; top: 4px; left: 3px; }
+    .badge.gd::after { width: 3px; height: 3px; top: 4px; right: 3px; }
+    .badge.endcrystal {
+      width: 12px; height: 12px; background: linear-gradient(135deg, #c252f0, #8c00ff);
+      transform: rotate(45deg);
+      border: 1px solid rgba(255,255,255,.2);
+      box-shadow: 0 0 4px rgba(140,0,255,.6);
+    }
 
-  .experience-item span {
-    color: var(--gray-text);
-    font-size: 0.9rem;
-  }
+    /* floating Latias */
+    .latias {
+      position: fixed; bottom: 20px; right: 20px; width: 90px; opacity: .9;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.4));
+      animation: bob 4.5s ease-in-out infinite;
+      z-index: 5;
+      cursor: pointer;
+    }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
+    /* music pill */
+    .music {
+      position: fixed; bottom: 20px; left: 20px; z-index: 10;
+    }
+    .music button {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 999px;
+      padding: .5rem 1rem;
+      color: #fff; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-size: .9rem;
+      display: flex; align-items: center; gap: .4rem;
+      transition: background .15s;
+    }
+    .music button:hover { background: rgba(255,255,255,.14); }
 
+    /* scroll to top */
+    .to-top {
+      position: fixed; right: 20px; bottom: 120px; opacity: 0; pointer-events: none;
+      transition: opacity .2s;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #fff; padding: .45rem .65rem; border-radius: 8px; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-size: .85rem;
+    }
+    .to-top.show { opacity: 1; pointer-events: auto; }
 
+    /* code-looking brackets around section */
+    .section-chrome {
+      position: absolute; inset: 2.5rem .5rem auto .5rem; pointer-events: none;
+    }
+    .section-chrome::before,
+    .section-chrome::after {
+      content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.04);
+    }
+    .section-chrome::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .section-chrome::after { top: 0; right: 0; border-left: none; border-bottom: none; }
+
+    @media (max-width: 650px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero img.avatar { margin: 0 auto; }
+      .latias { display: none; }
+    }
   </style>
 </head>
 <body>
-
-  <nav class="sidebar">
-    <a href="#home"><i class="fas fa-house"></i></a>
-    <a href="#projects"><i class="fas fa-folder-open"></i></a>
-    <a href="#aboutme"><i class="fas fa-link"></i></a>
-    <a href="#experience"><i class="fas fa-star"></i></a>
-    <a href="#friends"><i class="fas fa-users"></i></a>
-
-    <div class="music-player">
-      <button id="playPauseBtn" title="Play/Pause">
-        <i class="fas fa-play"></i>
-      </button>
+  <nav>
+    <div class="wrap">
+      <div class="brand">
+        <img src="https://riley.cat/assets/pfp.gif" alt="riley avatar" />
+        <span>riley.cat</span>
+      </div>
+      <ul id="topbar">
+        <li><a href="#home" data-section="home" class="active">home</a></li>
+        <li><a href="#projects" data-section="projects">projects</a></li>
+        <li><a href="#links" data-section="links">links</a></li>
+        <li><a href="#experience" data-section="experience">experience</a></li>
+        <li><a href="#friends" data-section="friends">friends</a></li>
+      </ul>
     </div>
   </nav>
 
-  <audio id="bg-music" src="https://riley.cat/assets/music.mp3" loop></audio>
-
-  <section id="home">
-    <h1>Home</h1>
-    <div class="banner-container">
-      <img class="banner" src="https://riley.cat/assets/banner.gif" alt="Banner" />
-      <img class="profile-pic" src="https://riley.cat/assets/pfp.gif" alt="Riley's Profile Picture" />
-    </div>
-    <div class="profile-name">riley</div>
-    <div class="profile-subtext">15, she/her, England</div>
-
-    <div class="about-box">
-      <p>hi! i’m riley ♡ i’m 15, she/her, and from england. i love making silly little websites, skripts, and minecraft servers.</p>
-      <p>i’m obsessed with latias, pink things, and anything cute. when i’m not coding or building stuff, i’m probably listening to music, collecting domains, or watching pokémon.</p>
-      <p>i like being creative, cozy, and making spaces that feel like home online ♡</p>
-    </div>
-
-  </section>
-
-  <section id="projects">
-    <h1>Projects</h1>
-    <div class="projects-list">
-      <div class="project-card">
-        <img class="project-icon" src="https://riley.cat/assets/rkprac.png" alt="RKPrac Icon">
-        <h2>Random Kits Practice</h2>
-        <p class="project-type">Minecraft Server</p>
-        <p class="project-description">
-          RKPrac was originally founded by Intallact in 2022-2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice. It's still up! Join using: <code>na-rkprac.my.pebble.host</code> Averages 3–10 players.
-        </p>
-      </div>
-
-      <div class="project-card">
-        <img class="project-icon" src="https://riley.cat/assets/yuzai.gif" alt="Yuzai Icon">
-        <h2>Yuzai / CaveKitz</h2>
-        <p class="project-type">Minecraft Server</p>
-        <p class="project-description">
-          CaveKitz was a server made by me, Witherred & Intallact, that gave you a random kit whenever you died. You were limited to a 200x200 area to mine, kill, and more. The original was shut down due to suspension by the ImpendMC RandomKits owner. It rebranded to Yuzai, but was shut down shortly after due to plugin issues. Averaged 10–35 players.
-        </p>
-      </div>
-
-      <div class="project-card">
-        <img class="project-icon" src="https://riley.cat/assets/ohara.gif" alt="Ohara">
-        <h2>Ohara.lol</h2>
-        <p class="project-type">Website</p>
-        <p class="project-description">
-          Silly little website I made after watching the Pokémon side series <em>Paldean Winds</em>, "Breathe Out". It features the entire  Pokémon Specials episode "Breathe Out".
-        </p>
-      </div>
-
-      <div class="project-card">
-        <img class="project-icon" src="https://riley.cat/assets/femboyfriday.jpg" alt="FemboyFriday.gay Icon">
-        <h2>FemboyFriday.gay</h2>
-        <p class="project-type">Website</p>
-        <p class="project-description">
-          Another silly website I made because I have an ungodly obsession with buying domain names. This website simply tells you if it's Femboy Friday or not. If it's not, it will display a countdown.. (probably)
-        </p>
-      </div>
-
-      <div class="project-card">
-        <img class="project-icon" src="https://riley.cat/assets/latias.png" alt="Latias.fun Icon">
-        <h2>Latias.fun</h2>
-        <p class="project-type">Website</p>
-        <p class="project-description">
-          Once again, another silly website for my favourite Pokémon, Latias! This website shows simple information like National Dex Number, Typing, Games you can catch it and PokéDex entries.
-        </p>
-      </div>
-
-      <div class="project-card">
-        <img class="project-icon" src="https://riley.cat/assets/core.png" alt="Core.SK Icon">
-        <h2>Core.sk</h2>
-        <p class="project-type">Minecraft Skript</p>
-        <p class="project-description">
-          Core is going to be an all-in-one Skript with many features including a Chat Filter, moderation chat utilities (/mutechat etc) clean GUI interface and more!
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-
-  <section id="aboutme">
-    <h1>Links</h1>
-    <div class="aboutme-info">
-      <div class="aboutme-item">
-        <i class="fab fa-discord"></i>
-        <a href="https://discord.com/users/1142433636822548601" target="_blank">Discord</a>
-      </div>
-      <div class="aboutme-item">
-        <i class="fas fa-envelope"></i>
-        <div>
-          <a href="mailto:hai@riley.cat">Email</a><br>
+  <main>
+    <!-- HOME -->
+    <section id="home">
+      <span class="section-chrome"></span>
+      <div class="hero">
+        <img class="avatar" src="https://riley.cat/assets/pfp.gif" alt="avatar" />
+        <div class="meta">
+          <h1>riley</h1>
+          <div class="tagline">15 • she/her • england</div>
         </div>
       </div>
-      <div class="aboutme-item">
-        <i class="fas fa-link"></i>
-        <a href="https://discord.gg/zP49RhAQhr" target="_blank">Twin Discord ([twin] tag)</a>
+      <div class="about">
+        <p>hi! i’m riley ♡ i’m 15, she/her, and from england. i love making silly little websites, skripts, and minecraft servers. i’m obsessed with latias, pink things, and anything cute. when i’m not coding or building stuff, i’m probably listening to music, collecting domains, or watching pokémon. i like being creative, cozy, and making spaces that feel like home online ♡</p>
       </div>
-      <div class="aboutme-item">
-        <i class="fas fa-user"></i>
-        <a href="https://en.pronouns.page/@ry.ly" target="_blank">Pronouns</a>
-      </div>
-      <div class="aboutme-item">
-        <i class="fab fa-github"></i>
-        <a href="https://github.com/rileysk" target="_blank">Github</a>
-      </div>
-      <div class="aboutme-item">
-        <i class="fab fa-soundcloud"></i>
-        <a href="https://on.soundcloud.com/XuMv41cnz3j36nIRsE" target="_blank">SoundCloud</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="experience">
-    <h1>Experience</h1>
-    <div class="experience-list">
-      <div class="experience-item">
-        <h3>Valoria Survival</h3>
-        <span>2025 - Present • 800+ Members</span>
+    <!-- PROJECTS -->
+    <section id="projects">
+      <span class="section-chrome"></span>
+      <h2 class="section-title">projects</h2>
+      <div class="cards">
+        <!-- RKPrac -->
+        <article class="card">
+          <h3>RandomKits Practice</h3>
+          <p>RKPrac was originally founded by Intallact in 2022–2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice.</p>
+        </article>
+        <!-- Yuzai -->
+        <article class="card">
+          <h3>Yuzai</h3>
+          <p>CaveKitz was a server made by me, Witherred &amp; Intallact, that gave you a random kit whenever you died. You were limited to a 200x200 area to mine, kill, and more. The original was shut down due to suspension by the ImpendMC RandomKits owner. It rebranded to Yuzai, but was shut down shortly after due to plugin issues. Averaged 10–35 players.</p>
+        </article>
+        <!-- Ohara -->
+        <article class="card">
+          <h3>Ohara.lol</h3>
+          <p>Silly little website I made after watching the Pokémon side series Paldean Winds, "Breathe Out". It features the entire Pokémon Specials episode "Breathe Out".</p>
+        </article>
+        <!-- FemboyFriday -->
+        <article class="card">
+          <h3>FemboyFriday.gay</h3>
+          <p>Another silly website I made because I have an ungodly obsession with buying domain names. This website simply tells you if it's Femboy Friday or not. If it's not, it will display a countdown.. (probably)</p>
+        </article>
+        <!-- Latias.fun -->
+        <article class="card">
+          <h3>Latias.fun</h3>
+          <p>Once again, another silly website for my favourite Pokémon, Latias! This website shows simple information like National Dex Number, Typing, Games you can catch it and PokéDex entries.</p>
+        </article>
+        <!-- Core.sk -->
+        <article class="card">
+          <h3>riley.cat Vanilla Practice</h3>
+          <p>riley.cat is a public Minecraft server in which players can practice their Vanilla (crystal) pvp skills against other players.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section id="links">
+      <span class="section-chrome"></span>
+      <h2 class="section-title">links</h2>
+      <div class="links-list">
+        <a href="https://discord.com/users/1142433636822548601" target="_blank" rel="noopener">
+          <img src="https://riley.cat/assets/discord.ico" alt="discord" /> Discord <span style="color:var(--muted);">ry.ly</span>
+        </a>
+        <a href="mailto:hai@riley.cat"><img src="https://riley.cat/assets/discord.ico" alt="mail" /> Email <span style="color:var(--muted);">hai@riley.cat</span></a>
+        <a href="https://discord.gg/zP49RhAQhr" target="_blank" rel="noopener"><img src="https://riley.cat/assets/discord.ico" alt="Discord" /> Twin Discord [twin] Tag</a>
+        <a href="https://en.pronouns.page/@ry.ly" target="_blank" rel="noopener"><img src="https://riley.cat/assets/pronouns.ico" alt="pronouns" /> Pronouns.page</a>
+        <a href="https://github.com/rileysk" target="_blank" rel="noopener"><img src="https://riley.cat/assets/github.ico" alt="github" /> Github</a>
+        <a href="https://www.last.fm/user/meowriley" target="_blank" rel="noopener"><img src="https://cdn.last.fm/favicon.ico" alt="lastfm" /> Last.fm</a>
+        <a href="https://laby.net/@2riley" target="_blank" rel="noopener"><img src="https://riley.cat/assets/laby.ico" alt="laby" />2riley</a>
+        <a href="https://store.valoriasurvival.net" target="_blank" rel="noopener"><img src="https://riley.cat/assets/valoria.png" alt="valoria" /> Valoria Survival</a>
+        <a href="https://store.crystalranked.org" target="_blank" rel="noopener"><img src="https://riley.cat/assets/crystalranked.png" alt="crystalranked" /> Crystal Ranked</a>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <span class="section-chrome"></span>
+      <h2 class="section-title">experience</h2>
+      <div class="xp-item">
+        <h3>Valoria Survival — 2025 – Present ↗ 800+ Members</h3>
+        <div class="meta">Moderator at <a href="https://discord.gg/valoriasurvival" target="_blank" rel="noopener">discord.gg/valoriasurvival</a></div>
         <p>Currently, I am the most active staff member on Valoria Survival. I was originally Discord Moderator before getting promoted to Helper, and then Moderator, where I now stand.</p>
       </div>
-      <div class="experience-item">
-        <h3>Crystal Ranked</h3>
-        <span>2025 – Present • 4.9k+ Members</span>
-        <p>I am currently set as Staff Manager on CrystalRanked (discord.gg/crystalranked), a Vanilla PvP Tier List owned by GalleryWalk and Kaqzy (same owners as ValoriaSurvival). </p>
+      <div class="xp-item">
+        <h3>CrystalRanked — 2025 – Present ↗ 5,000+ Members</h3>
+        <div class="meta">Staff Manager at <a href="https://discord.gg/crystalranked" target="_blank" rel="noopener">discord.gg/crystalranked</a></div>
+        <p>I am currently set as Staff Manager on CrystalRanked, a Vanilla PvP Tier List owned by GalleryWalk and Kaqzy (same owners as ValoriaSurvival).</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-
-  <section id="friends">
-    <h1>Friends</h1>
-    <div class="friends-list">
-      <div class="friend">
-        <img src="https://cdn.discordapp.com/avatars/1011756509501333532/a_145891d468a4cf5a5c7bffe0ed5f596e.gif" alt="Intallact">
-        <p><strong>Intallact <i class="fas fa-heart heart-icon"></i></strong></p>
-        <a href="https://intallact.cat" target="_blank">intallact.cat</a>
+    <!-- FRIENDS -->
+    <section id="friends">
+      <span class="section-chrome"></span>
+      <h2 class="section-title">friends</h2>
+      <div class="friends-grid">
+        <!-- Intallact -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/1011756509501333532/a_145891d468a4cf5a5c7bffe0ed5f596e.gif" alt="Intallact" />
+          <div>
+            <div class="name">Intallact <span class="badges"><span class="badge heart"></span></span></div>
+            <a href="https://intallact.cat" target="_blank" rel="noopener">intallact.cat</a>
+          </div>
+        </div>
+        <!-- Clokky -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky" />
+          <div>
+            <div class="name">Clokky</div>
+            <a href="https://discord.com/users/714824962468347926" target="_blank" rel="noopener">discord</a>
+          </div>
+        </div>
+        <!-- Alura -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura" />
+          <div>
+            <div class="name">Alura <span class="badges"><span class="badge bi" title="bisexual"></span></span></div>
+            <a href="https://alurameow.github.io/alura-portofolio/" target="_blank" rel="noopener">portfolio</a>
+          </div>
+        </div>
+        <!-- Zoizox -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox" />
+          <div>
+            <div class="name">Zoizox <span class="badges"><span class="badge gay" title="gay"></span></span></div>
+            <a href="https://discord.com/users/1349686467013906513" target="_blank" rel="noopener">discord</a>
+          </div>
+        </div>
+        <!-- Tara -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara" />
+          <div>
+            <div class="name">Tara <span class="badges"><span class="badge lesbian" title="lesbian"></span></span></div>
+            <a href="https://en.pronouns.page/@Ta.wa" target="_blank" rel="noopener">pronouns.page</a>
+          </div>
+        </div>
+        <!-- Bladed -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed" />
+          <div>
+            <div class="name">Bladed <span class="badges"><span class="badge gd" title="geometry dash"></span></span></div>
+            <a href="https://discord.com/users/943648040043044875" target="_blank" rel="noopener">discord</a>
+          </div>
+        </div>
+        <!-- AccursedFir -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png" alt="AccursedFir" />
+          <div>
+            <div class="name">AccursedFir <span class="badges"><span class="badge femboy" title="femboy"></span></span></div>
+            <a href="https://discord.com/users/943648040043044875" target="_blank" rel="noopener">discord</a>
+          </div>
+        </div>
+        <!-- Sheemeow -->
+        <div class="friend">
+          <img class="pfp" src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png" alt="Sheemeow" />
+          <div>
+            <div class="name">Sheemeow</div>
+            <a href="https://obvschmu.github.io" target="_blank" rel="noopener">website</a>
+          </div>
+        </div>
       </div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky"><p><strong>Clokky</strong></p></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura"><p><strong>Alura</strong></p><a href="https://alurameow.github.io/alura-portofolio/" target="_blank">alurameow.github.io</a></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox"><p><strong>Zoizox</strong></p></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara"><p><strong>Tara</strong></p><a href="https://en.pronouns.page/@Ta.wa" target="_blank">en.pronouns.page/@Ta.wa</a></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed"><p><strong>Bladed</strong></p></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png" alt="AccursedFir"><p><strong>AccursedFir</strong></p></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png" alt="Sheemeow"><p><strong>Sheemeow</strong></p><a href="https://obvschmu.github.io/" target="_blank">obvschmu.github.io</a></div>
-      <div class="friend"><img src="https://cdn.discordapp.com/avatars/1047076637759504415/f70b7c48615ec983e8551c84e0fec03f.png" alt="Jenni"><p><strong>Jenni</strong></p><a href="https://yeahjenni.xyz" target="_blank">yeahjenni.xyz</a></div>
-    </div>
-  </section>
+    </section>
+  </main>
+
+  <!-- Latias floater -->
+  <img class="latias" src="https://riley.cat/assets/latias.png" alt="latias" title=":3" />
+
+  <!-- Music -->
+  <div class="music">
+    <button id="music-btn">▶ play music</button>
+    <audio id="bgm" src="https://riley.cat/assets/music.mp3" loop></audio>
+  </div>
+
+  <button class="to-top" id="toTop">↑ top</button>
 
   <script>
-    const music = document.getElementById('bg-music');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const icon = playPauseBtn.querySelector('i');
+    // smooth scroll active link highlight (scrollspy)
+    const sections = ["home","projects","links","experience","friends"].map(id => document.getElementById(id));
+    const navLinks = [...document.querySelectorAll('nav a[data-section]')];
 
-    window.addEventListener('load', () => {
-      music.volume = 0.25;
-      music.play().then(() => {
-        icon.classList.remove('fa-play');
-        icon.classList.add('fa-pause');
-      }).catch(() => {
-        icon.classList.remove('fa-pause');
-        icon.classList.add('fa-play');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+        }
       });
+    }, { threshold: 0.55 });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // music controls
+    const btn = document.getElementById('music-btn');
+    const audio = document.getElementById('bgm');
+    let userInteracted = false;
+    btn.addEventListener('click', () => {
+      userInteracted = true;
+      if(audio.paused) { audio.play(); btn.textContent = '⏸ pause music'; }
+      else { audio.pause(); btn.textContent = '▶ play music'; }
     });
 
-    playPauseBtn.addEventListener('click', () => {
-      if (music.paused) {
-        music.play();
-        icon.classList.remove('fa-play');
-        icon.classList.add('fa-pause');
-      } else {
-        music.pause();
-        icon.classList.remove('fa-pause');
-        icon.classList.add('fa-play');
-      }
+    // show scroll-to-top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 600) toTop.classList.add('show'); else toTop.classList.remove('show');
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // click Latias to hop to home :3
+    document.querySelector('.latias').addEventListener('click', () => {
+      document.querySelector('#home').scrollIntoView({ behavior: 'smooth' });
     });
   </script>
-
-
-
 </body>
 </html>
