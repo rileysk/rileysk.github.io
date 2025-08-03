@@ -1,566 +1,646 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <!-- Meta Data -->
-  <meta name="description" content="she/her • 15 • England"> 
-  <meta property="og:title" content="riley!"> 
-  <meta property="og:image" content="https://riley.cat/assets/pfp.gif">
-  <meta property="og:description" content="meowmeow purr nya meow">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>riley → W.I.P</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
-
+  <title>riley — nature/dev themed personal site</title>
+  <meta name="description" content="riley's cozy corner of the web — projects, links, experience & friends" />
+  <link rel="icon" href="https://riley.cat/assets/laby.ico" />
   <style>
     :root {
-      --bg: #0e0f10;
-      --fg: #e9e9e9;
-      --muted: #9e9e9e;
-      --accent: #ff5fa3; /* pink */
-      --accent-2: #5effb5; /* mint */
-      --maxw: 1050px;
-      --shadow: 0 12px 28px rgba(0,0,0,.28);
-      --radius: 16px;
+      --bg: #f0f7f2;
+      --bg-alt: #e7f3ea;
+      --surface: #ffffff;
+      --text: #22312a;
+      --muted: #5f746a;
+      --accent: #4caf7c; /* nature green */
+      --accent-2: #ff7eb6; /* cute pink */
+      --border: rgba(0,0,0,0.06);
+      --radius: 18px;
+      --maxw: 1100px;
+      --shadow: 0 14px 40px -20px rgba(0,0,0,0.25);
+      --transition: 200ms ease;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1513;
+        --bg-alt: #101b17;
+        --surface: #141c1a;
+        --text: #e7f6ee;
+        --muted: #96b1a6;
+        --border: rgba(255,255,255,0.06);
+        --shadow: 0 18px 50px -30px rgba(0,0,0,0.6);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
       background: var(--bg);
-      color: var(--fg);
-      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      color: var(--text);
       line-height: 1.6;
-      overflow-x: hidden;
+      overflow-y: scroll;
     }
 
-    /* grunge / nature layers */
-    body::before, body::after {
+    /* Soft leaf-like blobs in the background */
+    body::before,
+    body::after {
       content: "";
       position: fixed;
-      inset: 0;
+      inset: -20% -10% auto auto;
+      width: 60vmax;
+      height: 60vmax;
+      background: radial-gradient(circle at 30% 30%, rgba(76, 175, 124, 0.15), transparent 70%);
+      filter: blur(50px);
       z-index: -2;
-      pointer-events: none;
+      transform: rotate(-15deg);
     }
-    /* mossy gradient wash */
-    body::before {
-      background: radial-gradient(circle at 20% 10%, rgba(94,255,181,.05), transparent 60%),
-                  radial-gradient(circle at 80% 90%, rgba(255,95,163,.06), transparent 70%),
-                  linear-gradient(135deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
-      mix-blend-mode: screen;
-      filter: contrast(120%) saturate(120%);
-    }
-    /* noise */
     body::after {
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="300" height="300" filter="url(%23n)" opacity=".06"/></svg>');
-      background-size: 200px 200px;
-      opacity: .35;
-      z-index: -1;
+      inset: auto auto -30% -10%;
+      background: radial-gradient(circle at 60% 60%, rgba(255, 126, 182, 0.12), transparent 70%);
+      transform: rotate(20deg);
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(20,20,21,.6);
-      backdrop-filter: blur(9px) saturate(140%);
-      border-bottom: 1px solid rgba(255,255,255,.04);
+    header {
+      position: sticky;
+      top: 0;
       z-index: 999;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px -6px rgba(0,0,0,0.1);
     }
-    nav .wrap {
+    @media (prefers-color-scheme: dark) {
+      header {
+        background: rgba(20, 28, 26, 0.55);
+      }
+    }
+
+    .nav {
       max-width: var(--maxw);
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: .75rem 1rem;
+      padding: 0.6rem 1rem;
     }
-    nav .brand {
-      display: flex; align-items: center; gap: .5rem;
-      font-family: 'JetBrains Mono', monospace; font-weight: 600;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
     }
-    nav .brand img { width: 28px; height: 28px; border-radius: 50%; }
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
     nav ul {
-      list-style: none; margin: 0; padding: 0; display: flex; gap: .75rem; flex-wrap: wrap;
-      font-family: 'JetBrains Mono', monospace; font-size: .9rem;
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
     }
+
     nav a {
-      display: inline-block; padding: .35rem .65rem; border-radius: 999px;
-      transition: background .2s, color .2s;
-      color: var(--fg);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
     }
-    nav a.active, nav a:hover {
-      background: rgba(255,255,255,.06);
+    nav a:hover,
+    nav a:focus {
+      background: var(--bg-alt);
+      color: var(--accent);
+      transform: translateY(-1px);
+      outline: none;
+    }
+    nav a.active {
+      background: var(--accent);
       color: #fff;
     }
 
-    main { margin-top: 70px; }
+    /* Mobile menu */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .burger span {
+      width: 24px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+    }
+    @media (max-width: 860px) {
+      nav ul {
+        display: none;
+        position: absolute;
+        right: 1rem;
+        top: 64px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        padding: 0.8rem;
+        border-radius: var(--radius);
+        flex-direction: column;
+        min-width: 200px;
+      }
+      nav ul.open {
+        display: flex;
+      }
+      .burger { display: flex; }
+    }
 
-    section {
+    main {
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 5rem 1rem 4rem;
-      position: relative;
-    }
-    section:not(:last-child) {
-      border-bottom: 1px dashed rgba(255,255,255,.04);
+      padding: 2.5rem 1rem 6rem;
     }
 
-    .section-title {
-      font-size: clamp(1.6rem, 5vw, 2.4rem);
+    section {
+      scroll-margin-top: 90px;
+      margin-bottom: 4rem;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      letter-spacing: -0.4px;
+    }
+
+    h1 span.name {
+      color: var(--accent);
+    }
+
+    h2 {
       margin: 0 0 1.5rem;
-      font-family: 'JetBrains Mono', monospace;
-      display: flex; align-items: center; gap: .6rem;
-      letter-spacing: -0.02em;
-      position: relative;
-    }
-    .section-title::before {
-      content: "";
-      width: 24px; height: 2px; background: var(--accent);
-    }
-
-    /* HOME */
-    .hero {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 1.5rem;
+      display: inline-flex;
       align-items: center;
-    }
-    .hero img.avatar {
-      width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
-      box-shadow: var(--shadow);
-      border: 3px solid rgba(255,255,255,.06);
-      image-rendering: pixelated;
-    }
-    .hero .meta h1 {
-      font-size: 2.4rem; margin: 0 0 .25rem; line-height: 1.15;
-    }
-    .tagline { color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-    .about {
-      margin-top: 1.5rem;
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.15rem;
-      backdrop-filter: blur(3px);
+      gap: 0.6rem;
     }
 
-    /* CARDS */
-    .cards {
+    .section-title-decor {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(76,175,124,0.15);
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.2rem;
     }
+
     .card {
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.05);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 1.1rem 1rem 1.2rem;
-      transition: transform .18s ease, box-shadow .18s ease;
+      padding: 1.1rem 1.2rem;
       position: relative;
       overflow: hidden;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform 500ms cubic-bezier(.2, .8, .2, 1), opacity 500ms ease;
     }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(0,0,0,.32); }
-    .card h3 { margin: 0 0 .4rem; font-size: 1.1rem; }
-    .card p { color: #ccc; font-size: .95rem; }
-    .card .badge-img {
-      position: absolute;
-      right: .75rem;
-      top: .75rem;
-      width: 54px; height: 54px; object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+    .card.in-view {
+      transform: none;
+      opacity: 1;
     }
 
-    /* LINKS LIST */
-    .links-list {
-      display: grid; gap: .6rem; max-width: 700px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .links-list a {
-      display: flex; align-items: center; gap: .65rem;
-      padding: .65rem .8rem;
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 10px;
-    }
-    .links-list img {
-      width: 18px; height: 18px; border-radius: 4px; object-fit: cover;
+    .card .icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--bg-alt);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.05);
+      margin-bottom: 0.6rem;
     }
 
-    /* EXPERIENCE */
-    .xp-item {
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 12px;
-      padding: 1rem 1rem 1.2rem;
-      margin-bottom: .8rem;
-      position: relative;
-    }
-    .xp-item h3 { margin: 0 0 .2rem; }
-    .xp-item .meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .85rem; color: var(--muted);
-      margin-bottom: .65rem;
-    }
-
-    /* FRIENDS */
-    .friends-grid {
-      display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    }
-    .friend {
-      display: flex; gap: .9rem; align-items: center;
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(255,255,255,.05);
-      border-radius: 14px;
-      padding: .8rem .9rem;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-    .friend img.pfp {
-      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
-      border: 2px solid rgba(255,255,255,.08);
-    }
-    .friend .name {
-      font-weight: 600; display: flex; align-items: center; gap: .4rem;
-    }
-    .friend .badges { display: flex; gap: .35rem; align-items: center; }
-
-    /* Badges */
-    .badge {
-      display: inline-block;
-      min-width: 12px; min-height: 12px;
-      width: 14px; height: 10px;
-      border-radius: 2px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,.05);
-    }
-    .badge.bi {
-      background: linear-gradient(180deg, #d60270 33.33%, #9b4f96 33.33% 66.66%, #0038a8 66.66%);
-    }
-    .badge.gay {
-      background: linear-gradient(180deg, #e40303 16.66%, #ff8c00 16.66% 33.33%, #ffed00 33.33% 50%, #008026 50% 66.66%, #004dff 66.66% 83.33%, #750787 83.33%);
-    }
-    .badge.lesbian {
-      background: linear-gradient(180deg, #d52d00 20%, #ef7627 20% 40%, #ffffff 40% 60%, #d162a4 60% 80%, #a30262 80%);
-    }
-    .badge.femboy {
-      background: linear-gradient(180deg, #ff8ef2 33.33%, #ffffff 33.33% 66.66%, #7bc7ff 66.66%);
-    }
-    .badge.heart {
-      width: 14px; height: 14px; position: relative; box-shadow: none; background: transparent;
-    }
-    .badge.heart::before {
-      content: '❤'; color: var(--accent); font-size: 14px; position: absolute; inset: -1px 0 0 0; text-align: center;
-      animation: pulse 1.3s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: .9; }
-      50% { transform: scale(1.2); opacity: 1; }
-    }
-    .badge.gd {
-      width: 14px; height: 14px; background: #f5e327; border: 2px solid #000; box-shadow: none;
-      position: relative; border-radius: 2px;
-    }
-    .badge.gd::before, .badge.gd::after {
-      content: ''; position: absolute; background: #000;
-    }
-    .badge.gd::before { width: 3px; height: 3px; top: 4px; left: 3px; }
-    .badge.gd::after { width: 3px; height: 3px; top: 4px; right: 3px; }
-    .badge.endcrystal {
-      width: 12px; height: 12px; background: linear-gradient(135deg, #c252f0, #8c00ff);
-      transform: rotate(45deg);
-      border: 1px solid rgba(255,255,255,.2);
-      box-shadow: 0 0 4px rgba(140,0,255,.6);
-    }
-
-    /* floating Latias */
-    .latias {
-      position: fixed; bottom: 20px; right: 20px; width: 90px; opacity: .9;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.4));
-      animation: bob 4.5s ease-in-out infinite;
-      z-index: 5;
-      cursor: pointer;
-    }
-    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-    /* music pill */
-    .music {
-      position: fixed; bottom: 20px; left: 20px; z-index: 10;
-    }
-    .music button {
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.1);
+    .separator {
+      height: 2px;
       border-radius: 999px;
-      padding: .5rem 1rem;
-      color: #fff; cursor: pointer;
-      font-family: 'JetBrains Mono', monospace; font-size: .9rem;
-      display: flex; align-items: center; gap: .4rem;
-      transition: background .15s;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 1rem 0 1.2rem;
+      opacity: 0.35;
     }
-    .music button:hover { background: rgba(255,255,255,.14); }
 
-    /* scroll to top */
-    .to-top {
-      position: fixed; right: 20px; bottom: 120px; opacity: 0; pointer-events: none;
-      transition: opacity .2s;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.1);
-      color: #fff; padding: .45rem .65rem; border-radius: 8px; cursor: pointer;
-      font-family: 'JetBrains Mono', monospace; font-size: .85rem;
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      letter-spacing: 0.2px;
     }
-    .to-top.show { opacity: 1; pointer-events: auto; }
 
-    /* code-looking brackets around section */
-    .section-chrome {
-      position: absolute; inset: 2.5rem .5rem auto .5rem; pointer-events: none;
+    .links-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.8rem;
     }
-    .section-chrome::before,
-    .section-chrome::after {
-      content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.04);
+    .link-item {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: var(--text);
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform 500ms cubic-bezier(.2, .8, .2, 1), opacity 500ms ease;
     }
-    .section-chrome::before { top: 0; left: 0; border-right: none; border-bottom: none; }
-    .section-chrome::after { top: 0; right: 0; border-left: none; border-bottom: none; }
+    .link-item.in-view {
+      transform: none;
+      opacity: 1;
+    }
+    .link-item img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
 
-    @media (max-width: 650px) {
-      .hero { grid-template-columns: 1fr; text-align: center; }
-      .hero img.avatar { margin: 0 auto; }
-      .latias { display: none; }
+    .xp-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .xp-item h3 {
+      margin: 0;
+    }
+    .xp-meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+      z-index: 9999;
+    }
+    .back-to-top.show {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    /* Music Control */
+    .music-control {
+      position: fixed;
+      left: 1rem;
+      bottom: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .music-control span {
+      font-size: 0.9rem;
+    }
+
+    /* Home hero */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      text-align: center;
+    }
+    .hero img.avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 6px solid var(--bg-alt);
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.08);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background: var(--bg-alt);
+      font-size: 0.86rem;
+      margin: 0 0.15rem;
+    }
+
+    .about {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .card, .link-item, .friend-card { transition: none !important; }
+      .hero img.avatar { animation: none; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="wrap">
+  <header>
+    <div class="nav">
       <div class="brand">
         <img src="https://riley.cat/assets/pfp.gif" alt="riley avatar" />
-        <span>riley.cat</span>
+        <span>riley</span>
       </div>
-      <ul id="topbar">
-        <li><a href="#home" data-section="home" class="active">home</a></li>
-        <li><a href="#projects" data-section="projects">projects</a></li>
-        <li><a href="#links" data-section="links">links</a></li>
-        <li><a href="#experience" data-section="experience">experience</a></li>
-        <li><a href="#friends" data-section="friends">friends</a></li>
-      </ul>
+      <nav>
+        <div class="burger" aria-label="toggle navigation" aria-expanded="false" role="button" tabindex="0">
+          <span></span><span></span><span></span>
+        </div>
+        <ul>
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#links">Links</a></li>
+          <li><a href="#experience">Experience</a></li>
+        </ul>
+      </nav>
     </div>
-  </nav>
+  </header>
 
   <main>
     <!-- HOME -->
     <section id="home">
-      <span class="section-chrome"></span>
       <div class="hero">
-        <img class="avatar" src="https://riley.cat/assets/pfp.gif" alt="avatar" />
-        <div class="meta">
-          <h1>riley</h1>
-          <div class="tagline">15 • she/her • england</div>
+        <img class="avatar" src="https://riley.cat/assets/pfp.gif" alt="riley avatar" />
+        <h1>hi, i'm <span class="name">riley</span> ♡</h1>
+        <div>
+          <span class="pill">age: 15</span>
+          <span class="pill">pronouns: she/her</span>
+          <span class="pill">from: england</span>
         </div>
-      </div>
-      <div class="about">
-        <p>hi! i’m riley ♡ i’m 15, she/her, and from england. i love making silly little websites, skripts, and minecraft servers. i’m obsessed with latias, pink things, and anything cute. when i’m not coding or building stuff, i’m probably listening to music, collecting domains, or watching pokémon. i like being creative, cozy, and making spaces that feel like home online ♡</p>
+        <p class="about lead">hi! i’m riley ♡ i’m 15, she/her, and from england. i love making silly little websites, skripts, and minecraft servers. i’m obsessed with latias, pink things, and anything cute. when i’m not coding or building stuff, i’m probably listening to music, collecting domains, or watching pokémon. i like being creative, cozy, and making spaces that feel like home online ♡</p>
       </div>
     </section>
 
     <!-- PROJECTS -->
     <section id="projects">
-      <span class="section-chrome"></span>
-      <h2 class="section-title">projects</h2>
-      <div class="cards">
+      <h2><span class="section-title-decor"></span> Projects</h2>
+      <div class="grid">
         <!-- RKPrac -->
         <article class="card">
-          <h3>RandomKits Practice</h3>
-          <p>RKPrac was originally founded by Intallact in 2022–2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice.</p>
+          <img class="icon" src="https://riley.cat/assets/rkprac.png" alt="RKPrac logo" />
+          <h3>RandomKits Practice (RKPrac) — <span class="tag">Minecraft Server</span></h3>
+          <div class="separator"></div>
+          <p>
+            RKPrac was originally founded by Intallact in 2022–2023 as a way for players to practice the unique fighting style on ImpendMC.net’s RandomKits Gamemode. In December 2023, I remade it with some improvements, then shut it down after a month. I then remade it in mid-2024 with help from kesulol. In 2025, I have remade and revamped it twice.
+          </p>
         </article>
+
         <!-- Yuzai -->
         <article class="card">
-          <h3>Yuzai</h3>
-          <p>CaveKitz was a server made by me, Witherred &amp; Intallact, that gave you a random kit whenever you died. You were limited to a 200x200 area to mine, kill, and more. The original was shut down due to suspension by the ImpendMC RandomKits owner. It rebranded to Yuzai, but was shut down shortly after due to plugin issues. Averaged 10–35 players.</p>
+          <img class="icon" src="https://riley.cat/assets/yuzai.gif" alt="Yuzai" />
+          <h3>Yuzai — <span class="tag">Minecraft Server</span></h3>
+          <div class="separator"></div>
+          <p>
+            CaveKitz was a server made by me, Witherred & Intallact, that gave you a random kit whenever you died. You were limited to a 200x200 area to mine, kill, and more. The original was shut down due to suspension by the ImpendMC RandomKits owner. It rebranded to Yuzai, but was shut down shortly after due to plugin issues. Averaged 10–35 players.
+          </p>
         </article>
-        <!-- Ohara -->
+
+        <!-- Ohara.lol -->
         <article class="card">
-          <h3>Ohara.lol</h3>
-          <p>Silly little website I made after watching the Pokémon side series Paldean Winds, "Breathe Out". It features the entire Pokémon Specials episode "Breathe Out".</p>
+          <img class="icon" src="https://riley.cat/assets/ohara.gif" alt="Ohara" />
+          <h3>Ohara.lol — <span class="tag">Website</span></h3>
+          <div class="separator"></div>
+          <p>
+            Silly little website I made after watching the Pokémon side series Paldean Winds, "Breathe Out". It features the entire Pokémon Specials episode "Breathe Out".
+          </p>
         </article>
-        <!-- FemboyFriday -->
+
+        <!-- FemboyFriday.gay -->
         <article class="card">
-          <h3>FemboyFriday.gay</h3>
-          <p>Another silly website I made because I have an ungodly obsession with buying domain names. This website simply tells you if it's Femboy Friday or not. If it's not, it will display a countdown.. (probably)</p>
+          <img class="icon" src="https://riley.cat/assets/femboyfriday.jpg" alt="Femboy Friday" />
+          <h3>FemboyFriday.gay — <span class="tag">Website</span></h3>
+          <div class="separator"></div>
+          <p>
+            Another silly website I made because I have an ungodly obsession with buying domain names. This website simply tells you if it's Femboy Friday or not. If it's not, it will display a countdown.. (probably)
+          </p>
         </article>
+
         <!-- Latias.fun -->
         <article class="card">
-          <h3>Latias.fun</h3>
-          <p>Once again, another silly website for my favourite Pokémon, Latias! This website shows simple information like National Dex Number, Typing, Games you can catch it and PokéDex entries.</p>
+          <img class="icon" src="https://riley.cat/assets/latias.png" alt="Latias" />
+          <h3>Latias.fun — <span class="tag">Website</span></h3>
+          <div class="separator"></div>
+          <p>
+            Once again, another silly website for my favourite Pokémon, Latias! This website shows simple information like National Dex Number, Typing, Games you can catch it and PokéDex entries.
+          </p>
         </article>
+
         <!-- Core.sk -->
         <article class="card">
-          <h3>riley.cat Vanilla Practice</h3>
-          <p>riley.cat is a public Minecraft server in which players can practice their Vanilla (crystal) pvp skills against other players.</p>
+          <img class="icon" src="https://riley.cat/assets/core.png" alt="Core.sk" />
+          <h3>Core.sk — <span class="tag">Minecraft Skript</span></h3>
+          <div class="separator"></div>
+          <p>
+            Core is going to be an all-in-one Skript with many features including a Chat Filter, moderation chat utilities (/mutechat etc) clean GUI interface and more!
+          </p>
         </article>
       </div>
     </section>
 
     <!-- LINKS -->
     <section id="links">
-      <span class="section-chrome"></span>
-      <h2 class="section-title">links</h2>
+      <h2><span class="section-title-decor"></span> Links</h2>
       <div class="links-list">
-        <a href="https://discord.com/users/1142433636822548601" target="_blank" rel="noopener">
-          <img src="https://riley.cat/assets/discord.ico" alt="discord" /> Discord <span style="color:var(--muted);">ry.ly</span>
+        <a class="link-item" href="https://discord.com/users/1142433636822548601" target="_blank" rel="noreferrer noopener">
+          <img src="https://riley.cat/assets/laby.ico" alt="Discord" />
+          <span>Discord</span>
         </a>
-        <a href="mailto:hai@riley.cat"><img src="https://riley.cat/assets/discord.ico" alt="mail" /> Email <span style="color:var(--muted);">hai@riley.cat</span></a>
-        <a href="https://discord.gg/zP49RhAQhr" target="_blank" rel="noopener"><img src="https://riley.cat/assets/discord.ico" alt="Discord" /> Twin Discord [twin] Tag</a>
-        <a href="https://en.pronouns.page/@ry.ly" target="_blank" rel="noopener"><img src="https://riley.cat/assets/pronouns.ico" alt="pronouns" /> Pronouns.page</a>
-        <a href="https://github.com/rileysk" target="_blank" rel="noopener"><img src="https://riley.cat/assets/github.ico" alt="github" /> Github</a>
-        <a href="https://www.last.fm/user/meowriley" target="_blank" rel="noopener"><img src="https://cdn.last.fm/favicon.ico" alt="lastfm" /> Last.fm</a>
-        <a href="https://laby.net/@2riley" target="_blank" rel="noopener"><img src="https://riley.cat/assets/laby.ico" alt="laby" />2riley</a>
-        <a href="https://store.valoriasurvival.net" target="_blank" rel="noopener"><img src="https://riley.cat/assets/valoria.png" alt="valoria" /> Valoria Survival</a>
-        <a href="https://store.crystalranked.org" target="_blank" rel="noopener"><img src="https://riley.cat/assets/crystalranked.png" alt="crystalranked" /> Crystal Ranked</a>
+        <a class="link-item" href="mailto:hai@riley.cat" target="_blank" rel="noreferrer noopener">
+          <img src="https://riley.cat/assets/pronouns.ico" alt="Email" />
+          <span>Email — hai@riley.cat</span>
+        </a>
+        <a class="link-item" href="https://discord.gg/zP49RhAQhr" target="_blank" rel="noreferrer noopener">
+          <img src="https://riley.cat/assets/laby.ico" alt="Twin Discord" />
+          <span>Twin Discord</span>
+        </a>
+        <a class="link-item" href="https://en.pronouns.page/@ry.ly" target="_blank" rel="noreferrer noopener">
+          <img src="https://riley.cat/assets/pronouns.ico" alt="Pronouns.page" />
+          <span>Pronouns.page</span>
+        </a>
+        <a class="link-item" href="https://github.com/rileysk" target="_blank" rel="noreferrer noopener">
+          <img src="https://riley.cat/github.ico" alt="GitHub" />
+          <span>GitHub</span>
+        </a>
+        <a class="link-item" href="https://www.last.fm/user/meowriley" target="_blank" rel="noreferrer noopener">
+          <img src="https://riley.cat/assets/laby.ico" alt="Last.fm" />
+          <span>Last.fm</span>
+        </a>
       </div>
     </section>
 
     <!-- EXPERIENCE -->
     <section id="experience">
-      <span class="section-chrome"></span>
-      <h2 class="section-title">experience</h2>
-      <div class="xp-item">
-        <h3>Valoria Survival — 2025 – Present ↗ 800+ Members</h3>
-        <div class="meta">Moderator at <a href="https://discord.gg/valoriasurvival" target="_blank" rel="noopener">discord.gg/valoriasurvival</a></div>
-        <p>Currently, I am the most active staff member on Valoria Survival. I was originally Discord Moderator before getting promoted to Helper, and then Moderator, where I now stand.</p>
-      </div>
-      <div class="xp-item">
-        <h3>CrystalRanked — 2025 – Present ↗ 5,000+ Members</h3>
-        <div class="meta">Staff Manager at <a href="https://discord.gg/crystalranked" target="_blank" rel="noopener">discord.gg/crystalranked</a></div>
-        <p>I am currently set as Staff Manager on CrystalRanked, a Vanilla PvP Tier List owned by GalleryWalk and Kaqzy (same owners as ValoriaSurvival).</p>
+      <h2><span class="section-title-decor"></span> Experience</h2>
+      <div class="grid">
+        <article class="card xp-item">
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <img class="icon" src="https://riley.cat/assets/valoria.png" alt="Valoria Survival" />
+            <div>
+              <h3>Valoria Survival</h3>
+              <div class="xp-meta">2025 – Present ↗ 800+ Members</div>
+            </div>
+          </div>
+          <div class="separator"></div>
+          <p>
+            Currently, I am the most active staff member on Valoria Survival. I was originally Discord Moderator before getting promoted to Helper, and then Moderator, where I now stand.
+          </p>
+        </article>
+
+        <article class="card xp-item">
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <img class="icon" src="https://riley.cat/assets/crystalranked.png" alt="CrystalRanked" />
+            <div>
+              <h3>CrystalRanked</h3>
+              <div class="xp-meta">2025 – Present ↗ 5,000+ Members</div>
+            </div>
+          </div>
+          <div class="separator"></div>
+          <p>
+            I am currently set as Staff Manager on CrystalRanked (discord.gg/crystalranked), a Vanilla PvP Tier List owned by GalleryWalk and Kaqzy (same owners as ValoriaSurvival).
+          </p>
+        </article>
       </div>
     </section>
 
     <!-- FRIENDS -->
-    <section id="friends">
-      <span class="section-chrome"></span>
-      <h2 class="section-title">friends</h2>
-      <div class="friends-grid">
-        <!-- Intallact -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/1011756509501333532/a_145891d468a4cf5a5c7bffe0ed5f596e.gif" alt="Intallact" />
-          <div>
-            <div class="name">Intallact <span class="badges"><span class="badge heart"></span></span></div>
-            <a href="https://intallact.cat" target="_blank" rel="noopener">intallact.cat</a>
-          </div>
-        </div>
-        <!-- Clokky -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/714824962468347926/b34cb697ff6bac7076bf7aa88151a172.png" alt="Clokky" />
-          <div>
-            <div class="name">Clokky</div>
-            <a href="https://discord.com/users/714824962468347926" target="_blank" rel="noopener">discord</a>
-          </div>
-        </div>
-        <!-- Alura -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/1053220853489356891/0d6da195aca30bb21bcd25ec8c12eccd.png" alt="Alura" />
-          <div>
-            <div class="name">Alura <span class="badges"><span class="badge bi" title="bisexual"></span></span></div>
-            <a href="https://alurameow.github.io/alura-portofolio/" target="_blank" rel="noopener">portfolio</a>
-          </div>
-        </div>
-        <!-- Zoizox -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/1349686467013906513/59d2ee2680e598ca3b49de0b1e361dff.png" alt="Zoizox" />
-          <div>
-            <div class="name">Zoizox <span class="badges"><span class="badge gay" title="gay"></span></span></div>
-            <a href="https://discord.com/users/1349686467013906513" target="_blank" rel="noopener">discord</a>
-          </div>
-        </div>
-        <!-- Tara -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/1313882765678350398/90305df6b8475aa00d9017f964e22003.png" alt="Tara" />
-          <div>
-            <div class="name">Tara <span class="badges"><span class="badge lesbian" title="lesbian"></span></span></div>
-            <a href="https://en.pronouns.page/@Ta.wa" target="_blank" rel="noopener">pronouns.page</a>
-          </div>
-        </div>
-        <!-- Bladed -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/943648040043044875/62d9e23364b0779f2cb17e8e69eb874f.png" alt="Bladed" />
-          <div>
-            <div class="name">Bladed <span class="badges"><span class="badge gd" title="geometry dash"></span></span></div>
-            <a href="https://discord.com/users/943648040043044875" target="_blank" rel="noopener">discord</a>
-          </div>
-        </div>
-        <!-- AccursedFir -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/1126112802185162812/7a4837e13184457bc51c71af7b30b3c3.png" alt="AccursedFir" />
-          <div>
-            <div class="name">AccursedFir <span class="badges"><span class="badge femboy" title="femboy"></span></span></div>
-            <a href="https://discord.com/users/943648040043044875" target="_blank" rel="noopener">discord</a>
-          </div>
-        </div>
-        <!-- Sheemeow -->
-        <div class="friend">
-          <img class="pfp" src="https://cdn.discordapp.com/avatars/972166058809122866/2d261a5b5a2aa1100983c26bc2ee20ba.png" alt="Sheemeow" />
-          <div>
-            <div class="name">Sheemeow</div>
-            <a href="https://obvschmu.github.io" target="_blank" rel="noopener">website</a>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <!-- Latias floater -->
-  <img class="latias" src="https://riley.cat/assets/latias.png" alt="latias" title=":3" />
+  <button class="back-to-top" aria-label="Back to top">↑</button>
 
   <!-- Music -->
-  <div class="music">
-    <button id="music-btn">▶ play music</button>
-    <audio id="bgm" src="https://riley.cat/assets/music.mp3" loop></audio>
+  <audio id="bgMusic" src="https://riley.cat/assets/music.mp3" loop></audio>
+  <div class="music-control" id="musicToggle" role="button" aria-pressed="false">
+    <span id="musicState">▶︎ play music</span>
   </div>
 
-  <button class="to-top" id="toTop">↑ top</button>
-
   <script>
-    // smooth scroll active link highlight (scrollspy)
-    const sections = ["home","projects","links","experience","friends"].map(id => document.getElementById(id));
-    const navLinks = [...document.querySelectorAll('nav a[data-section]')];
+    // Mobile nav toggle
+    const burger = document.querySelector('.burger');
+    const navList = document.querySelector('nav ul');
+    burger?.addEventListener('click', () => {
+      const open = navList.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    burger?.addEventListener('keypress', (e) => { if (e.key === 'Enter') burger.click(); });
 
-    const observer = new IntersectionObserver(entries => {
+    // Active link highlighting on scroll
+    const sections = [...document.querySelectorAll('main section')];
+    const navLinks = [...document.querySelectorAll('nav a')];
+    const setActiveLink = () => {
+      const scrollPos = window.scrollY + 120; // offset for sticky header
+      let current = sections[0].id;
+      for (const sec of sections) {
+        if (scrollPos >= sec.offsetTop) current = sec.id;
+      }
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    };
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+
+    // In-view animations (cards, links, friend cards)
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.55 });
+    }, { threshold: 0.15 });
 
-    sections.forEach(sec => observer.observe(sec));
+    document.querySelectorAll('.card, .link-item, .friend-card').forEach(el => observer.observe(el));
 
-    // music controls
-    const btn = document.getElementById('music-btn');
-    const audio = document.getElementById('bgm');
-    let userInteracted = false;
-    btn.addEventListener('click', () => {
-      userInteracted = true;
-      if(audio.paused) { audio.play(); btn.textContent = '⏸ pause music'; }
-      else { audio.pause(); btn.textContent = '▶ play music'; }
-    });
-
-    // show scroll-to-top
-    const toTop = document.getElementById('toTop');
+    // Back to top visibility
+    const backToTop = document.querySelector('.back-to-top');
     window.addEventListener('scroll', () => {
-      if(window.scrollY > 600) toTop.classList.add('show'); else toTop.classList.remove('show');
+      if (window.scrollY > 500) backToTop.classList.add('show');
+      else backToTop.classList.remove('show');
     });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // click Latias to hop to home :3
-    document.querySelector('.latias').addEventListener('click', () => {
-      document.querySelector('#home').scrollIntoView({ behavior: 'smooth' });
+    // Music control
+    const music = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicState = document.getElementById('musicState');
+    let playing = false;
+    const updateMusicText = () => musicState.textContent = playing ? '❚❚ pause music' : '▶︎ play music';
+    musicToggle.addEventListener('click', async () => {
+      try {
+        if (!playing) {
+          await music.play();
+          playing = true;
+          musicToggle.setAttribute('aria-pressed', 'true');
+        } else {
+          music.pause();
+          playing = false;
+          musicToggle.setAttribute('aria-pressed', 'false');
+        }
+        updateMusicText();
+      } catch (e) {
+        console.error(e);
+      }
     });
+    updateMusicText();
   </script>
 </body>
 </html>
